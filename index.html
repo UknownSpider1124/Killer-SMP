@@ -278,19 +278,19 @@
         .btn-group {
             display: flex;
             justify-content: center;
-            gap: 1.5rem;
+            gap: 1.2rem;
             flex-wrap: wrap;
         }
 
         /* Cyberpunk Hover Button Animation */
         .btn {
             position: relative;
-            padding: 1rem 2.5rem;
+            padding: 1rem 2rem;
             font-family: 'Orbitron', sans-serif;
-            font-size: 1rem;
+            font-size: 0.95rem;
             font-weight: 700;
             text-transform: uppercase;
-            letter-spacing: 2px;
+            letter-spacing: 1.5px;
             color: #fff;
             text-decoration: none;
             border: none;
@@ -300,16 +300,25 @@
             border-radius: 8px;
             transition: all 0.3s ease;
             z-index: 1;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
         }
 
-        .btn-primary {
-            background: linear-gradient(135deg, var(--primary), #d62828);
-            box-shadow: 0 0 20px rgba(255, 70, 85, 0.4);
+        .btn-register {
+            background: linear-gradient(135deg, #00ff88, #00b894);
+            color: #0a0b10;
+            box-shadow: 0 0 20px rgba(0, 255, 136, 0.4);
         }
 
         .btn-discord {
             background: linear-gradient(135deg, #5865F2, #404EED);
             box-shadow: 0 0 20px rgba(88, 101, 242, 0.4);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), #d62828);
+            box-shadow: 0 0 20px rgba(255, 70, 85, 0.4);
         }
 
         .btn::before {
@@ -374,7 +383,7 @@
         @media (max-width: 768px) {
             .teams-container { flex-direction: column; }
             .vs-badge { margin: 1rem 0; }
-            .btn { width: 100%; }
+            .btn { width: 100%; justify-content: center; }
         }
     </style>
 </head>
@@ -468,8 +477,11 @@
             </div>
             
             <div class="btn-group">
+                <a href="https://forms.gle/AvqXbhQeh8QLkGfs6" target="_blank" class="btn btn-register">
+                    <i class="fa-solid fa-pen-to-square"></i> Register Now
+                </a>
                 <a href="https://discord.gg/EmW7q2SkDP" target="_blank" class="btn btn-discord">
-                    <i class="fa-brands fa-discord"></i> Join Discord to Register
+                    <i class="fa-brands fa-discord"></i> Join Discord
                 </a>
                 <a href="mailto:aptstudiosss@gmail.com" class="btn btn-primary">
                     <i class="fa-solid fa-envelope"></i> Contact Host
@@ -481,6 +493,7 @@
         <footer>
             <p>&copy; 2026 APT Studios (AAM OS). All rights reserved.</p>
             <div class="contact-links">
+                <a href="https://forms.gle/AvqXbhQeh8QLkGfs6" target="_blank"><i class="fa-solid fa-pen-to-square"></i> Registration Form</a>
                 <a href="mailto:aptstudiosss@gmail.com"><i class="fa-solid fa-envelope"></i> aptstudiosss@gmail.com</a>
                 <a href="https://discord.gg/EmW7q2SkDP" target="_blank"><i class="fa-brands fa-discord"></i> Join Discord</a>
             </div>
