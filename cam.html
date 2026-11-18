@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Photo Info Editor</title>
+<style>
+  :root{color-scheme:dark;--bg:#080d19;--panel:#111a2b;--panel2:#0c1423;--muted:#9aa9c2;--text:#edf3ff;--accent:#8bb7ff;--line:#263650;--good:#8fe0b2}
+  *{box-sizing:border-box}
+  body{margin:0;min-height:100vh;padding:34px 16px 50px;background:radial-gradient(ellipse at 50% -10%,#20365c 0,#0b1323 42%,#080d19 78%);color:var(--text);font:15px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+  main{width:min(850px,100%);margin:auto}
+  .top{margin:0 0 24px}.eyebrow{display:inline-flex;align-items:center;gap:8px;color:#b9d3ff;font-size:11px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;background:#8bb7ff16;border:1px solid #8bb7ff30;border-radius:99px;padding:6px 11px}
+  h1{margin:13px 0 5px;font-size:clamp(29px,6vw,42px);line-height:1.12;letter-spacing:-1.3px}.sub{color:var(--muted);margin:0;max-width:650px}
+  .panel{background:linear-gradient(145deg,#141f33f5,#101827f5);border:1px solid #31425f;border-radius:22px;padding:clamp(16px,3.5vw,26px);box-shadow:0 22px 65px #0006}
+  .section-title{font-size:15px;font-weight:800;margin:0 0 12px}.pickers{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .drop{display:flex;flex-direction:column;justify-content:center;min-height:116px;border:1px dashed #58729a;border-radius:16px;padding:18px;text-align:left;cursor:pointer;background:linear-gradient(145deg,#172640,#101a2b);transition:.2s}
+  .drop:hover{border-color:var(--accent);background:#1a2c49}.drop strong{font-size:15px}.drop span{color:var(--muted);font-size:12px;margin-top:4px}.drop .symbol{font-size:22px;margin-bottom:5px}
+  input[type=file]{display:none}
+  input[type=text],input[type=number]{width:100%;margin-top:7px;padding:12px 13px;color:#f4f7ff;background:#0a1220;border:1px solid #344761;border-radius:11px;outline:none;font:inherit;min-width:0}
+  input:focus{border-color:var(--accent);box-shadow:0 0 0 3px #78a9ff20}
+  .preview{display:none;align-items:center;gap:13px;margin:16px 0 0;padding:11px;border:1px solid var(--line);border-radius:14px;background:#0b1423}
+  .preview img{width:66px;height:66px;object-fit:cover;border-radius:10px;background:#080d18}.preview .file{min-width:0}.preview b{display:block;overflow-wrap:anywhere}.preview small{color:var(--muted)}
+  .fields{display:grid;grid-template-columns:1fr 1fr;gap:15px;margin-top:23px}label.field{display:block;color:#dce6fa;font-size:12px;font-weight:750}.full{grid-column:1/-1}
+  .actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:23px}
+  button{border:0;border-radius:12px;padding:13px 17px;font:750 14px system-ui;cursor:pointer;transition:transform .15s,opacity .15s}
+  button:active{transform:scale(.98)}button:disabled{opacity:.42;cursor:not-allowed}.primary{background:linear-gradient(135deg,#a8cbff,#78a9ff);color:#081326;box-shadow:0 7px 22px #78a9ff25}.secondary{background:#263a58;color:#eaf1ff;border:1px solid #3b5274}
+  #status{min-height:24px;margin-top:15px;font-size:13px;color:#b9d2ff;overflow-wrap:anywhere}.warning{color:#ffd89a!important}.note{color:var(--muted);font-size:12px;margin:16px 0 0;line-height:1.6}
+  .tip{margin-top:15px;padding:12px 14px;border-radius:12px;background:#8bb7ff0d;border:1px solid #8bb7ff25;color:#bdcde5;font-size:12px}
+  @media(max-width:560px){body{padding:24px 12px 38px}.pickers,.fields{grid-template-columns:1fr}.full{grid-column:auto}.panel{border-radius:18px}.drop{min-height:92px}.actions button{width:100%}}
+</style>
+</head>
+<body>
+<main>
+  <header class="top">
+    <span class="eyebrow">✦ APT Studiosss · EXIF tools</span>
+    <h1>Photo Metadata Editor</h1>
+    <p class="sub">Update camera and ownership details in your JPEGs while keeping the original photo pixels and capture date/time intact.</p>
+  </header>
+  <section class="panel">
+    <p class="section-title">1. Select your photos</p>
+    <div class="pickers">
+      <label class="drop" for="photo">
+        <span class="symbol">▧</span><strong>Choose photos</strong>
+        <span>Select multiple JPG / JPEG images</span>
+      </label>
+      <label class="drop" for="folder">
+        <span class="symbol">▤</span><strong>Choose a folder</strong>
+        <span>Best on desktop · selects JPEGs inside</span>
+      </label>
+    </div>
+    <input id="photo" type="file" accept=".jpg,.jpeg,image/jpeg" multiple>
+    <input id="folder" type="file" accept=".jpg,.jpeg,image/jpeg" webkitdirectory directory multiple>
+    <div class="preview" id="preview">
+      <img id="thumb" alt="Selected photo preview">
+      <div class="file"><b id="filename"></b><small id="filesize"></small></div>
+    </div>
+
+    <p class="section-title" style="margin-top:24px">2. Edit metadata</p>
+    <div class="fields">
+      <label class="field">Camera brand / make
+        <input id="make" type="text" value="Sony" placeholder="e.g. Apple, Sony, Canon">
+      </label>
+      <label class="field">Camera model
+        <input id="camera" type="text" value="Alpha A7S3" placeholder="e.g. iPhone 12 mini">
+      </label>
+      <label class="field full">Megapixels (metadata label)
+        <input id="megapixels" type="number" min="0.1" max="999" step="0.1" value="35" placeholder="35">
+      </label>
+      <label class="field">Lens focal length
+        <input id="lens" type="text" value="14-24mm" placeholder="e.g. 14-24mm">
+      </label>
+      <label class="field">Aperture
+        <input id="aperture" type="text" value="f/2.8" placeholder="e.g. f/2.8">
+      </label>
+      <label class="field">Owner
+        <input id="owner" type="text" value="Aviral Pandey" placeholder="Camera owner">
+      </label>
+      <label class="field">Copyright
+        <input id="copyright" type="text" value="©APT Studiosss" placeholder="e.g. © 2026 Your Name">
+      </label>
+    </div>
+    <div class="actions">
+      <button class="primary" id="save" disabled>Process &amp; download ZIP</button>
+      <button class="secondary" id="share" type="button" disabled>Share to iPhone Photos</button>
+      <button class="secondary" id="clear" type="button">Reset fields</button>
+    </div>
+    <div class="tip">iPhone tip: after processing, tap <b>Share to iPhone Photos</b>, then choose <b>Save Images</b> in the iOS share sheet. If that option is unavailable, download the ZIP, open it in Files, extract it, then share the JPEGs to Photos.</div>
+    <div id="status" role="status" aria-live="polite"></div>
+    <p class="note">Privacy: processing happens on your device; photos are not uploaded. Only JPEG metadata is changed, not the image pixels. Original EXIF capture date/time values are preserved. Browser downloads cannot retain the file-system created/modified timestamps. Megapixels is a metadata label only and does not change actual resolution.</p>
+  </section>
+</main>
+<script src="https://cdn.jsdelivr.net/npm/piexifjs@1.0.6/piexif.min.js"></script>\n<script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
+<script>
+(() => {
+  const fileInput = document.getElementById('photo');
+  const folderInput = document.getElementById('folder');
+  const saveBtn = document.getElementById('save');\n  const shareBtn = document.getElementById('share');\n  let processedFiles = [];
+  const status = document.getElementById('status');
+  let selectedFiles = [];
+
+  const setStatus = (message, warning = false) => {
+    status.textContent = message;
+    status.className = warning ? 'warning' : '';
+  };
+
+  // Normalize common manufacturer spellings so apps do not show duplicate brands.
+  const normalizeMake = (make) => {
+    const value = (make || '').trim();
+    if (!value) return '';
+    const known = {
+      apple: 'Apple', sony: 'Sony', canon: 'Canon', nikon: 'Nikon',
+      fujifilm: 'FUJIFILM', panasonic: 'Panasonic', samsung: 'Samsung',
+      google: 'Google', oppo: 'OPPO', vivo: 'vivo', oneplus: 'OnePlus',
+      xiaomi: 'Xiaomi', dji: 'DJI'
+    };
+    return known[value.toLowerCase()] || value;
+  };
+
+  const decodeExifText = (value) => {
+    if (typeof value === 'string') return value.replace(/\0/g, '').trim();
+    if (Array.isArray(value)) return String.fromCharCode(...value).replace(/\0/g, '').trim();
+    return '';
+  };
+
+  const readExif = async (file) => {
+    const dataUrl = await new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = () => reject(new Error('Could not read ' + file.name));
+      reader.readAsDataURL(file);
+    });
+    try {
+      const exif = piexif.load(dataUrl);
+      return {
+        dataUrl,
+        exif,
+        make: normalizeMake(decodeExifText(exif['0th']?.[piexif.ImageIFD.Make])),
+        model: decodeExifText(exif['0th']?.[piexif.ImageIFD.Model])
+      };
+    } catch (_) {
+      return { dataUrl, exif: null, make: '', model: '' };
+    }
+  };
+
+  const acceptSelection = async (files, sourceLabel) => {
+    const valid = Array.from(files || []).filter(file =>
+      /^image\/jpeg$/i.test(file.type) || /\.jpe?g$/i.test(file.name)
+    );
+    if (!valid.length) {
+      selectedFiles = [];
+      saveBtn.disabled = true;
+      setStatus('No JPG/JPEG photos found. Please choose JPEG files or a folder containing them.', true);
+      return;
+    }
+    selectedFiles = valid;
+    saveBtn.disabled = false;
+    const first = selectedFiles[0];
+    document.getElementById('thumb').src = URL.createObjectURL(first);
+    document.getElementById('filename').textContent =
+      selectedFiles.length === 1 ? first.name : `${selectedFiles.length} photos selected${sourceLabel ? ' from folder' : ''}`;
+    document.getElementById('filesize').textContent =
+      (selectedFiles.reduce((sum, f) => sum + f.size, 0) / 1024 / 1024).toFixed(2) + ' MB total';
+    document.getElementById('preview').style.display = 'flex';
+    try {
+      const info = await readExif(first);
+      if (info.make) document.getElementById('make').value = info.make;
+      if (info.model) document.getElementById('camera').value = info.model;
+      setStatus(`Ready: ${selectedFiles.length} JPEG photo(s)${sourceLabel ? ' found in the selected folder' : ''}.`);
+    } catch (_) {
+      setStatus(`Ready: ${selectedFiles.length} JPEG photo(s).`);
+    }
+  };
+
+  fileInput.addEventListener('change', () => acceptSelection(fileInput.files, false));
+  folderInput.addEventListener('change', () => acceptSelection(folderInput.files, true));
+
+  document.getElementById('clear').addEventListener('click', () => {
+    document.getElementById('make').value = '';
+    document.getElementById('camera').value = '';
+    document.getElementById('lens').value = '14-24mm';
+    document.getElementById('aperture').value = 'f/2.8';
+    document.getElementById('owner').value = '';
+    document.getElementById('copyright').value = '';
+    document.getElementById('megapixels').value = '35';
+    setStatus('Fields cleared. Lens reset to 14-24mm, aperture to f/2.8, and megapixels to 35.');
+  });
+
+
+  const buildOutputs = async () => {
+    if (!selectedFiles.length) throw new Error('Choose at least one JPEG first.');
+    if (!window.piexif) throw new Error('Metadata library did not load. Check your internet connection and refresh.');
+    const make = normalizeMake(document.getElementById('make').value);
+    let model = document.getElementById('camera').value.trim();
+    if (make && model.toLowerCase().startsWith(make.toLowerCase() + ' ')) model = model.slice(make.length).trim();
+    const lens = document.getElementById('lens').value.trim();
+    const apertureText = document.getElementById('aperture').value.trim();
+    const apertureMatch = apertureText.match(/(?:f\s*\/\s*)?(\d+(?:\.\d+)?)/i);
+    const aperture = apertureMatch ? Number(apertureMatch[1]) : NaN;
+    const owner = document.getElementById('owner').value.trim();
+    const copyright = document.getElementById('copyright').value.trim();
+    const mpText = document.getElementById('megapixels').value.trim();
+    const mp = Number(mpText);
+    if (apertureText && (!Number.isFinite(aperture) || aperture <= 0 || aperture > 128)) throw new Error('Enter a valid aperture, such as f/2.8, or leave it blank.');
+    if (mpText && (!Number.isFinite(mp) || mp <= 0 || mp > 999)) throw new Error('Enter a valid megapixel value, or leave it blank.');
+
+    const outputs = [], errors = [];
+    for (let i = 0; i < selectedFiles.length; i++) {
+      const file = selectedFiles[i];
+      setStatus(`Processing ${i + 1} of ${selectedFiles.length}: ${file.name}`);
+      try {
+        const {dataUrl, exif: loadedExif} = await readExif(file);
+        const exif = loadedExif || {'0th':{},'Exif':{},'GPS':{},'Interop':{},'1st':{},thumbnail:null};
+        exif['0th'] = exif['0th'] || {}; exif['Exif'] = exif['Exif'] || {}; exif['GPS'] = exif['GPS'] || {};
+        const setOrDelete = (obj, tag, value) => { if (value) obj[tag] = value; else delete obj[tag]; };
+        setOrDelete(exif['0th'], piexif.ImageIFD.Make, make);
+        setOrDelete(exif['0th'], piexif.ImageIFD.Model, model);
+        setOrDelete(exif['Exif'], piexif.ExifIFD.LensModel, lens);
+        if (apertureText) exif['Exif'][piexif.ExifIFD.FNumber] = [Math.round(aperture * 100), 100];
+        else delete exif['Exif'][piexif.ExifIFD.FNumber];
+        setOrDelete(exif['Exif'], piexif.ExifIFD.CameraOwnerName, owner);
+        setOrDelete(exif['0th'], piexif.ImageIFD.Copyright, copyright);
+        if (mpText) {
+          const label = `${mp} MP (metadata label; actual pixels unchanged)`;
+          exif['0th'][piexif.ImageIFD.ImageDescription] = label;
+          exif['Exif'][piexif.ExifIFD.UserComment] = [65,83,67,73,73,0,0,0,...Array.from(new TextEncoder().encode(label))];
+        } else { delete exif['0th'][piexif.ImageIFD.ImageDescription]; delete exif['Exif'][piexif.ExifIFD.UserComment]; }
+        const output = piexif.insert(piexif.dump(exif), dataUrl);
+        const blob = await (await fetch(output)).blob();
+        const name = file.name.replace(/\.jpe?g$/i, '') + '_metadata.jpg';
+        outputs.push({name, blob, file:new File([blob], name, {type:'image/jpeg',lastModified:file.lastModified})});
+      } catch (err) { errors.push(`${file.name}: ${err?.message || 'could not update metadata'}`); }
+    }
+    processedFiles = outputs;
+    shareBtn.disabled = outputs.length === 0;
+    if (!outputs.length) throw new Error('No photos could be processed. ' + errors.join(' | '));
+    return {outputs, errors};
+  };
+
+  saveBtn.addEventListener('click', async () => {
+    saveBtn.disabled = true; shareBtn.disabled = true;
+    try {
+      const {outputs, errors} = await buildOutputs();
+      if (!window.JSZip) throw new Error('ZIP library did not load. Check your internet connection and refresh.');
+      const zip = new JSZip();
+      outputs.forEach(item => zip.file(item.name, item.blob));
+      const zipBlob = await zip.generateAsync({type:'blob',compression:'STORE'}, meta => setStatus(`Preparing ZIP… ${Math.round(meta.percent)}%`));
+      const url = URL.createObjectURL(zipBlob);
+      const a = document.createElement('a'); a.href = url;
+      a.download = `APT_Metadata_Photos_${new Date().toISOString().slice(0,10)}.zip`;
+      document.body.appendChild(a); a.click(); a.remove();
+      setTimeout(() => URL.revokeObjectURL(url), 60000);
+      setStatus(`Done: ${outputs.length} of ${selectedFiles.length} photo(s) processed into one ZIP.${errors.length ? ' Failed: ' + errors.join(' | ') : ''}`, errors.length > 0);
+    } catch (err) { setStatus(err.message || 'Could not process photos.', true); }
+    finally { saveBtn.disabled = false; }
+  });
+
+  shareBtn.addEventListener('click', async () => {
+    shareBtn.disabled = true;
+    try {
+      let outputs = processedFiles;
+      if (!outputs.length) ({outputs} = await buildOutputs());
+      const files = outputs.map(x => x.file);
+      if (navigator.share && navigator.canShare && navigator.canShare({files})) {
+        await navigator.share({files,title:'Updated photos'});
+        setStatus('Share sheet opened. Choose Save Images / Save to Photos if available.');
+      } else {
+        throw new Error('Direct photo sharing is not supported by this browser. Download the ZIP, extract it in Files, then share the JPEGs to Photos.');
+      }
+    } catch (err) { if (err.name !== 'AbortError') setStatus(err.message || 'Sharing was cancelled.', true); }
+    finally { shareBtn.disabled = processedFiles.length === 0; }
+  });
+
+})();
+</script>
+</body>
+</html>
