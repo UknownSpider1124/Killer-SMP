@@ -1,893 +1,1615 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Eclipse Nexus | Gaming Tournament | APT Studios</title>
-    <!-- Google Fonts & Font Awesome Icons -->
-    <link href="https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@400;500;600;700&family=Orbitron:wght@600;800;900&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="shortcut icon" href="ChatGPT Image Jul 26, 2026, 03_15_16 PM.png" type="image/png">
-    
-    <style>
-        /* --- CSS VARIABLES & APPLE GLASS DESIGN SYSTEM --- */
-        :root {
-            --primary: #ff1e27;
-            --secondary: #00f0ff;
-            --accent: #ffb703;
-            --apple-blue: #007aff;
-            --apple-purple: #af52de;
-            --bg-dark: #000000;
-            --glass-bg: rgba(255, 255, 255, 0.05);
-            --glass-bg-hover: rgba(255, 255, 255, 0.08);
-            --glass-border: rgba(255, 255, 255, 0.15);
-            --glass-border-light: rgba(255, 255, 255, 0.25);
-            --text-light: #f5f5f7;
-            --text-muted: #86868b;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", 'Rajdhani', sans-serif;
-        }
-
-        body {
-            background-color: var(--bg-dark);
-            color: var(--text-light);
-            overflow-x: hidden;
-            min-height: 100vh;
-            position: relative;
-        }
-
-        /* --- APPLE VIBRANT AMBIENT BACKGROUND --- */
-        .ambient-bg {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            z-index: -1;
-            overflow: hidden;
-        }
-
-        .blob {
-            position: absolute;
-            border-radius: 50%;
-            filter: blur(120px);
-            opacity: 0.35;
-            animation: float 18s ease-in-out infinite alternate;
-        }
-
-        .blob-1 {
-            top: -10%;
-            left: 10%;
-            width: 500px;
-            height: 500px;
-            background: radial-gradient(circle, var(--primary) 0%, transparent 70%);
-        }
-
-        .blob-2 {
-            bottom: -10%;
-            right: 10%;
-            width: 600px;
-            height: 600px;
-            background: radial-gradient(circle, var(--apple-blue) 0%, transparent 70%);
-            animation-delay: -5s;
-        }
-
-        .blob-3 {
-            top: 40%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 450px;
-            height: 450px;
-            background: radial-gradient(circle, var(--apple-purple) 0%, transparent 70%);
-            animation-delay: -10s;
-        }
-
-        @keyframes float {
-            0% { transform: translate(0, 0) scale(1); }
-            50% { transform: translate(30px, -50px) scale(1.1); }
-            100% { transform: translate(-30px, 20px) scale(0.95); }
-        }
-
-        /* --- APPLE GLASS UI CARD STYLES --- */
-        .glass-card {
-            background: var(--glass-bg);
-            backdrop-filter: blur(25px) saturate(180%);
-            -webkit-backdrop-filter: blur(25px) saturate(180%);
-            border: 1px solid var(--glass-border);
-            border-radius: 24px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.15);
-            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-
-        .glass-card:hover {
-            background: var(--glass-bg-hover);
-            border-color: var(--glass-border-light);
-            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.25);
-        }
-
-        /* --- LAYOUT & CONTAINER --- */
-        .container {
-            max-width: 1140px;
-            margin: 0 auto;
-            padding: 3rem 1.5rem;
-        }
-
-        /* --- HEADER / HERO SECTION --- */
-        header {
-            text-align: center;
-            padding: 1rem 1rem 2rem;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .logo-container {
-            width: 110px;
-            height: 110px;
-            margin-bottom: 1.2rem;
-            position: relative;
-        }
-
-        .logo-container img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-            filter: drop-shadow(0 0 20px rgba(255, 30, 39, 0.6));
-            animation: logoPulse 3s ease-in-out infinite alternate;
-        }
-
-        @keyframes logoPulse {
-            0% { transform: scale(1); filter: drop-shadow(0 0 15px rgba(255, 30, 39, 0.5)); }
-            100% { transform: scale(1.05); filter: drop-shadow(0 0 30px rgba(255, 30, 39, 0.9)); }
-        }
-
-        .badge-live {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            background: rgba(255, 255, 255, 0.08);
-            border: 1px solid var(--glass-border);
-            backdrop-filter: blur(10px);
-            color: #fff;
-            padding: 8px 18px;
-            border-radius: 30px;
-            font-size: 0.85rem;
-            font-weight: 600;
-            letter-spacing: 1.5px;
-            text-transform: uppercase;
-            margin-bottom: 1rem;
-        }
-
-        .badge-live i {
-            color: var(--primary);
-            animation: pulse 2s infinite;
-        }
-
-        h1 {
-            font-family: 'Orbitron', sans-serif;
-            font-size: clamp(2.8rem, 7vw, 5rem);
-            font-weight: 900;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            background: linear-gradient(180deg, #ffffff 0%, rgba(255, 255, 255, 0.65) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin-bottom: 0.8rem;
-        }
-
-        .subtitle {
-            font-size: 1.25rem;
-            color: var(--text-muted);
-            font-weight: 500;
-            letter-spacing: 1px;
-        }
-
-        /* --- HERO BANNER SHOWCASE --- */
-        .hero-banner {
-            width: 100%;
-            height: 380px;
-            border-radius: 28px;
-            overflow: hidden;
-            position: relative;
-            margin: 1.5rem 0 2.5rem;
-            border: 1px solid var(--glass-border);
-            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.6);
-        }
-
-        .hero-banner img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            object-position: center;
-            transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-
-        .hero-banner:hover img {
-            transform: scale(1.03);
-        }
-
-        .hero-overlay {
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(0deg, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.2) 60%, transparent 100%);
-            display: flex;
-            align-items: flex-end;
-            padding: 2rem;
-        }
-
-        .hero-text {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 1.4rem;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            color: #fff;
-            text-shadow: 0 2px 10px rgba(0,0,0,0.8);
-        }
-
-        /* --- COUNTDOWN TIMER --- */
-        .countdown-section {
-            margin: 2rem 0;
-            padding: 2rem;
-            text-align: center;
-        }
-
-        .countdown-title {
-            font-size: 1.1rem;
-            color: var(--text-muted);
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            margin-bottom: 1.5rem;
-            font-weight: 600;
-        }
-
-        .timer-grid {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 1.5rem;
-            flex-wrap: wrap;
-        }
-
-        .time-box {
-            background: rgba(255, 255, 255, 0.04);
-            border: 1px solid var(--glass-border);
-            border-radius: 16px;
-            padding: 1rem 1.5rem;
-            min-width: 100px;
-        }
-
-        .time-value {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 2.5rem;
-            font-weight: 800;
-            background: linear-gradient(135deg, #fff 0%, var(--primary) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .time-label {
-            font-size: 0.75rem;
-            color: var(--text-muted);
-            text-transform: uppercase;
-            margin-top: 4px;
-            letter-spacing: 1px;
-        }
-
-        /* --- EXPANDABLE FEATURED GAMES SECTION --- */
-        .games-section {
-            margin: 2.5rem 0;
-        }
-
-        .section-title {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 1.3rem;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            text-align: center;
-            color: var(--text-light);
-            margin-bottom: 0.3rem;
-        }
-
-        .section-subtitle {
-            text-align: center;
-            color: var(--text-muted);
-            font-size: 0.9rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .games-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 1.5rem;
-            align-items: start;
-        }
-
-        .game-card {
-            padding: 2rem 1.5rem;
-            text-align: center;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            gap: 0.8rem;
-            cursor: pointer;
-            user-select: none;
-            position: relative;
-            overflow: hidden;
-            border-color: var(--glass-border);
-        }
-
-        .game-card i.game-icon {
-            font-size: 2.5rem;
-            color: var(--primary);
-            background: rgba(255, 255, 255, 0.05);
-            padding: 18px;
-            border-radius: 20px;
-            border: 1px solid var(--glass-border);
-            transition: transform 0.4s ease, color 0.4s ease;
-        }
-
-        .game-card:hover i.game-icon {
-            transform: scale(1.1);
-            color: #fff;
-        }
-
-        .game-card h3 {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 1.4rem;
-            font-weight: 700;
-            color: #fff;
-        }
-
-        .click-hint {
-            font-size: 0.75rem;
-            color: var(--primary);
-            letter-spacing: 1px;
-            text-transform: uppercase;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            transition: opacity 0.3s ease;
-        }
-
-        .click-hint i {
-            transition: transform 0.3s ease;
-        }
-
-        .game-card.active .click-hint i {
-            transform: rotate(180deg);
-        }
-
-        /* Expansion Box Mechanics */
-        .game-desc-wrapper {
-            display: grid;
-            grid-template-rows: 0fr;
-            transition: grid-template-rows 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-            width: 100%;
-        }
-
-        .game-card.active .game-desc-wrapper {
-            grid-template-rows: 1fr;
-        }
-
-        .game-desc-content {
-            overflow: hidden;
-        }
-
-        .game-desc-inner {
-            margin-top: 1rem;
-            padding: 1rem;
-            background: rgba(0, 0, 0, 0.4);
-            border-radius: 16px;
-            border: 1px solid rgba(255, 30, 39, 0.3);
-            font-size: 0.95rem;
-            font-weight: 500;
-            color: var(--text-light);
-            line-height: 1.4;
-            box-shadow: inset 0 0 15px rgba(255, 30, 39, 0.1);
-        }
-
-        .game-card.active {
-            border-color: rgba(255, 30, 39, 0.5);
-            background: rgba(255, 255, 255, 0.08);
-            box-shadow: 0 0 30px rgba(255, 30, 39, 0.2);
-        }
-
-        /* --- DETAILS GRID --- */
-        .grid-layout {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 1.5rem;
-            margin: 2.5rem 0;
-        }
-
-        .info-card {
-            padding: 1.8rem;
-            display: flex;
-            align-items: center;
-            gap: 1.2rem;
-        }
-
-        .info-card i {
-            font-size: 1.8rem;
-            color: #fff;
-            background: rgba(255, 255, 255, 0.08);
-            padding: 14px;
-            border-radius: 16px;
-            border: 1px solid var(--glass-border);
-        }
-
-        .info-content h3 {
-            font-size: 0.9rem;
-            color: var(--text-muted);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 0.2rem;
-        }
-
-        .info-content p {
-            font-size: 1.25rem;
-            font-weight: 700;
-            color: #fff;
-        }
-
-        /* --- TEAMS VS SECTION --- */
-        .vs-section {
-            padding: 2.5rem;
-            margin: 2.5rem 0;
-            text-align: center;
-        }
-
-        .teams-container {
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 2rem;
-            margin-top: 1.5rem;
-        }
-
-        .team-box {
-            flex: 1;
-            min-width: 220px;
-            padding: 2rem;
-            border-radius: 20px;
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid var(--glass-border);
-            transition: 0.3s ease;
-        }
-
-        .team-box:hover {
-            background: rgba(255, 255, 255, 0.06);
-        }
-
-        .team-box h2 {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 1.8rem;
-            text-transform: uppercase;
-        }
-
-        .vs-badge {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 2.2rem;
-            font-weight: 900;
-            font-style: italic;
-            color: var(--accent);
-        }
-
-        /* --- HIGHLIGHT / FEE & PRIZE BANNER --- */
-        .highlight-banner {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 1.5rem;
-            margin: 2.5rem 0;
-        }
-
-        .banner-card {
-            padding: 2.2rem;
-            text-align: center;
-        }
-
-        .banner-card h3 {
-            font-size: 0.95rem;
-            color: var(--text-muted);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 0.5rem;
-        }
-
-        .price-tag {
-            font-size: 2.5rem;
-            font-weight: 900;
-            font-family: 'Orbitron', sans-serif;
-            color: #00ff88;
-        }
-
-        .strike-through {
-            text-decoration: line-through;
-            color: var(--text-muted);
-            font-size: 1.2rem;
-            margin-right: 8px;
-        }
-
-        /* --- BUTTONS & ACTIONS --- */
-        .action-area {
-            text-align: center;
-            margin: 3rem 0;
-            padding: 3rem 2rem;
-        }
-
-        .deadline-text {
-            color: #ff6b6b;
-            font-weight: 600;
-            font-size: 1.1rem;
-            margin-bottom: 2rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-        }
-
-        .btn-group {
-            display: flex;
-            justify-content: center;
-            gap: 1.2rem;
-            flex-wrap: wrap;
-        }
-
-        .btn {
-            padding: 1rem 2rem;
-            font-size: 0.95rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            color: #fff;
-            text-decoration: none;
-            border: 1px solid var(--glass-border);
-            border-radius: 14px;
-            backdrop-filter: blur(10px);
-            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            cursor: pointer;
-        }
-
-        .btn-register {
-            background: var(--apple-blue);
-            border-color: rgba(255, 255, 255, 0.3);
-            box-shadow: 0 10px 25px rgba(0, 122, 255, 0.3);
-        }
-
-        .btn-discord {
-            background: rgba(88, 101, 242, 0.3);
-            border-color: rgba(88, 101, 242, 0.5);
-        }
-
-        .btn-primary {
-            background: rgba(255, 255, 255, 0.08);
-        }
-
-        .btn:hover {
-            transform: translateY(-3px) scale(1.02);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
-            border-color: #fff;
-        }
-
-        /* --- FOOTER --- */
-        footer {
-            margin-top: 4rem;
-            padding: 2.5rem 0;
-            border-top: 1px solid var(--glass-border);
-            text-align: center;
-            color: var(--text-muted);
-            font-size: 0.95rem;
-        }
-
-        .contact-links {
-            display: flex;
-            justify-content: center;
-            gap: 2rem;
-            margin-top: 1.2rem;
-            flex-wrap: wrap;
-        }
-
-        .contact-links a {
-            color: var(--text-light);
-            text-decoration: none;
-            transition: color 0.3s ease;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .contact-links a:hover {
-            color: var(--secondary);
-        }
-
-        @keyframes pulse {
-            0% { opacity: 0.6; }
-            50% { opacity: 1; }
-            100% { opacity: 0.6; }
-        }
-
-        @media (max-width: 768px) {
-            .hero-banner { height: 240px; }
-            .teams-container { flex-direction: column; }
-            .btn { width: 100%; justify-content: center; }
-            .time-box { min-width: 70px; padding: 0.8rem 1rem; }
-            .time-value { font-size: 1.8rem; }
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>January Test Series | Official Tournament Portal — KillersMP</title>
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Google Fonts: Bebas Neue, Plus Jakarta Sans & JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=JetBrains+Mono:wght@500;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Plus Jakarta Sans', 'sans-serif'],
+            display: ['Bebas Neue', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+          },
+          colors: {
+            pitch: {
+              950: '#040806',
+              900: '#08120e',
+              800: '#0f2119',
+              700: '#173327',
+            },
+            cherry: {
+              400: '#f87171',
+              500: '#ef4444',
+              600: '#dc2626',
+              700: '#b91c1c',
+            },
+            gold: {
+              300: '#fde047',
+              400: '#facc15',
+              500: '#eab308',
+              600: '#ca8a04',
+            },
+            turf: {
+              400: '#34d399',
+              500: '#10b981',
+              600: '#059669',
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    body {
+      background-color: #040806;
+      color: #f8fafc;
+      overflow-x: hidden;
+    }
+
+    .stadium-grid {
+      background-image:
+        linear-gradient(to right, rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
+      background-size: 56px 56px;
+    }
+
+    .glow-gold {
+      box-shadow: 0 0 36px -6px rgba(234, 179, 8, 0.45);
+    }
+
+    .glow-cherry {
+      box-shadow: 0 0 36px -6px rgba(220, 38, 38, 0.45);
+    }
+
+    .text-outline-gold {
+      -webkit-text-stroke: 1.5px rgba(250, 204, 21, 0.35);
+      color: transparent;
+    }
+
+    .text-outline-white {
+      -webkit-text-stroke: 1.5px rgba(248, 250, 252, 0.25);
+      color: transparent;
+    }
+
+    /* Animated Equalizer Bars */
+    @keyframes eq1 { 0%, 100% { height: 5px; } 50% { height: 18px; } }
+    @keyframes eq2 { 0%, 100% { height: 16px; } 50% { height: 4px; } }
+    @keyframes eq3 { 0%, 100% { height: 8px; } 50% { height: 19px; } }
+    @keyframes eq4 { 0%, 100% { height: 14px; } 50% { height: 6px; } }
+
+    .eq-on .bar-1 { animation: eq1 0.52s ease-in-out infinite; }
+    .eq-on .bar-2 { animation: eq2 0.44s ease-in-out infinite; }
+    .eq-on .bar-3 { animation: eq3 0.62s ease-in-out infinite; }
+    .eq-on .bar-4 { animation: eq4 0.48s ease-in-out infinite; }
+
+    /* Floodlight Beam Pulse */
+    @keyframes beamSway {
+      0%, 100% { transform: rotate(-6deg) scaleY(1); opacity: 0.55; }
+      50% { transform: rotate(4deg) scaleY(1.06); opacity: 0.8; }
+    }
+    .floodlight-left {
+      transform-origin: top left;
+      animation: beamSway 9s ease-in-out infinite;
+    }
+    .floodlight-right {
+      transform-origin: top right;
+      animation: beamSway 11s ease-in-out infinite reverse;
+    }
+
+    /* Scroll Reveal */
+    .reveal-card {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .reveal-card.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
 </head>
-<body>
+<body class="antialiased selection:bg-gold-400 selection:text-pitch-950">
 
-    <!-- Ambient Gradient Background -->
-    <div class="ambient-bg">
-        <div class="blob blob-1"></div>
-        <div class="blob blob-2"></div>
-        <div class="blob blob-3"></div>
+  <!-- =====================================================================
+       1. STICKY BROADCAST HEADER
+  ====================================================================== -->
+  <header class="fixed top-0 inset-x-0 z-50 bg-pitch-950/85 backdrop-blur-xl border-b border-white/10">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 sm:h-20 flex items-center justify-between gap-3">
+      <!-- Brand Identity -->
+      <a href="#" class="flex items-center gap-3 group sfx-hover">
+        <div class="w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-gradient-to-br from-cherry-600 to-cherry-700 border border-white/20 flex items-center justify-center shadow-lg shadow-cherry-600/30 group-hover:scale-105 transition-transform">
+          <!-- Red Cherry Cricket Ball SVG -->
+          <svg class="w-6 h-6 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="9" />
+            <path d="M8.2 4.6c2.2 4.6 2.2 10.2 0 14.8M15.8 4.6c-2.2 4.6-2.2 10.2 0 14.8" stroke="#fde047" stroke-dasharray="2 2" />
+          </svg>
+        </div>
+        <div>
+          <div class="flex items-center gap-2">
+            <span class="font-display text-2xl sm:text-3xl tracking-wider text-white leading-none">
+              JANUARY <span class="text-gold-400">TEST SERIES</span>
+            </span>
+          </div>
+          <span class="font-mono text-[10px] sm:text-xs tracking-[0.2em] text-turf-400 uppercase block">
+            KILLERSMP.QZZ.IO • RED-BALL EDITION
+          </span>
+        </div>
+      </a>
+
+      <!-- Anchor Navigation -->
+      <nav class="hidden lg:flex items-center gap-7 text-sm font-semibold text-slate-300">
+        <a href="#action-stage" class="hover:text-gold-400 transition-colors sfx-hover">Action Reel</a>
+        <a href="#dossier" class="hover:text-gold-400 transition-colors sfx-hover">Match Format</a>
+        <a href="#roadmap" class="hover:text-gold-400 transition-colors sfx-hover">Jan 2–6 Schedule</a>
+        <a href="#sfx-console" class="hover:text-gold-400 transition-colors sfx-hover">Stadium SFX</a>
+      </nav>
+
+      <!-- Audio Toggle + Primary Registration CTA -->
+      <div class="flex items-center gap-2.5 sm:gap-3.5">
+        <button id="sfxToggleBtn" type="button" aria-label="Toggle Stadium Sound Effects"
+          class="flex items-center gap-2.5 px-3 sm:px-4 py-2 rounded-xl bg-pitch-800/90 hover:bg-pitch-700 border border-white/15 text-xs sm:text-sm font-semibold text-slate-200 transition-all active:scale-95">
+          <div id="eqBars" class="flex items-end gap-[2px] h-4 w-4 justify-center">
+            <span class="bar-1 w-[3px] h-1.5 bg-gold-400 rounded-full"></span>
+            <span class="bar-2 w-[3px] h-3 bg-gold-400 rounded-full"></span>
+            <span class="bar-3 w-[3px] h-2 bg-gold-400 rounded-full"></span>
+            <span class="bar-4 w-[3px] h-2.5 bg-gold-400 rounded-full"></span>
+          </div>
+          <span id="sfxStatusDesktop" class="hidden sm:inline font-mono text-xs">ENABLE SFX</span>
+          <span id="sfxStatusMobile" class="sm:hidden font-mono text-xs">SFX</span>
+        </button>
+
+        <a href="https://forms.gle/GdDVJZMJen6FktVQ8" target="_blank" rel="noopener noreferrer"
+          class="sfx-click sfx-hover inline-flex items-center gap-2 px-4 sm:px-6 py-2.5 rounded-xl bg-gradient-to-r from-gold-400 to-gold-500 hover:from-gold-300 hover:to-gold-400 text-pitch-950 font-extrabold text-xs sm:text-sm uppercase tracking-wider glow-gold transition-all hover:-translate-y-0.5 active:translate-y-0">
+          <span>Fill Form</span>
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.6" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+          </svg>
+        </a>
+      </div>
     </div>
+  </header>
 
-    <div class="container">
-        <!-- HERO HEADER SECTION -->
-        <header>
-            <div class="logo-container">
-                <img src="ChatGPT Image Jul 26, 2026, 03_15_16 PM.png" alt="Eclipse Nexus Emblem Logo">
-            </div>
-            <div class="badge-live"><i class="fa-solid fa-circle"></i> Registration Open</div>
-            <h1>Eclipse Nexus</h1>
-            <p class="subtitle">Ultimate Gaming Tournament</p>
-        </header>
+  <!-- =====================================================================
+       2. HERO STADIUM SHOWCASE
+  ====================================================================== -->
+  <section class="relative min-h-screen pt-28 pb-16 flex flex-col justify-between overflow-hidden stadium-grid">
+    <!-- Volumetric Stadium Floodlights -->
+    <div class="pointer-events-none absolute -top-24 -left-24 w-[540px] h-[680px] bg-gradient-to-b from-white/15 via-turf-500/10 to-transparent blur-3xl floodlight-left"></div>
+    <div class="pointer-events-none absolute -top-24 -right-24 w-[540px] h-[680px] bg-gradient-to-b from-white/15 via-gold-500/10 to-transparent blur-3xl floodlight-right"></div>
+    <div class="pointer-events-none absolute bottom-0 inset-x-0 h-48 bg-gradient-to-t from-pitch-950 to-transparent"></div>
 
-        <!-- HERO BANNER SHOWCASE -->
-        <div class="hero-banner">
-            <img src="ChatGPT Image Jul 26, 2026, 07_38_23 PM.png" alt="Eclipse Nexus Retro Terminal Setup">
-            <div class="hero-overlay">
-                <div class="hero-text">Welcome to the Nexus Arena</div>
-            </div>
+    <!-- Ambient Floating Stadium Particles Canvas -->
+    <canvas id="heroDustCanvas" class="pointer-events-none absolute inset-0 w-full h-full"></canvas>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 my-auto relative z-10 w-full">
+      <div class="grid lg:grid-cols-12 gap-10 lg:gap-8 items-center">
+        
+        <!-- Left Hero Content -->
+        <div class="lg:col-span-7 space-y-6 text-center lg:text-left">
+          <!-- Official Status Pill -->
+          <div class="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-cherry-600/15 border border-cherry-500/40 text-cherry-300 font-mono text-xs sm:text-sm font-bold tracking-wider uppercase">
+            <span class="relative flex h-2.5 w-2.5">
+              <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-cherry-400 opacity-75"></span>
+              <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-cherry-500"></span>
+            </span>
+            Official Tournament Announcement • Free Player Registration
+          </div>
+
+          <!-- Display Headline -->
+          <h1 class="font-display text-7xl sm:text-8xl md:text-9xl tracking-tight leading-[0.86] text-white">
+            JANUARY <br />
+            <span class="bg-gradient-to-r from-gold-300 via-gold-400 to-cherry-500 bg-clip-text text-transparent">
+              TEST SERIES
+            </span>
+          </h1>
+
+          <p class="text-slate-300 text-base sm:text-lg md:text-xl max-w-2xl mx-auto lg:mx-0 leading-relaxed">
+            Five days of pure red-ball endurance, tactical sessions, and high-stakes cricket. Compete in a <strong class="text-white">2-Innings Non-Lead Test Match Series</strong> from <strong class="text-gold-400">January 2 to January 6</strong> with zero entry fee.
+          </p>
+
+          <!-- Key Fact Pills -->
+          <div class="flex flex-wrap items-center justify-center lg:justify-start gap-2.5 pt-1">
+            <span class="px-3.5 py-1.5 rounded-xl bg-pitch-800/90 border border-gold-400/30 font-mono text-xs sm:text-sm font-bold text-gold-300">
+              JAN 2 – JAN 6 (WED)
+            </span>
+            <span class="px-3.5 py-1.5 rounded-xl bg-pitch-800/90 border border-cherry-500/30 font-mono text-xs sm:text-sm font-bold text-cherry-300">
+              2-INNINGS TEST
+            </span>
+            <span class="px-3.5 py-1.5 rounded-xl bg-pitch-800/90 border border-turf-400/30 font-mono text-xs sm:text-sm font-bold text-turf-300">
+              NON-LEAD FORMAT
+            </span>
+            <span class="px-3.5 py-1.5 rounded-xl bg-turf-500/20 border border-turf-400/50 font-mono text-xs sm:text-sm font-bold text-white">
+              100% FREE ENTRY
+            </span>
+          </div>
+
+          <!-- Primary CTA Buttons -->
+          <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 pt-3">
+            <a href="https://forms.gle/GdDVJZMJen6FktVQ8" target="_blank" rel="noopener noreferrer"
+              class="sfx-click sfx-hover w-full sm:w-auto inline-flex items-center justify-center gap-3 px-8 py-4 rounded-2xl bg-gradient-to-r from-gold-400 to-gold-500 hover:from-gold-300 hover:to-gold-400 text-pitch-950 font-extrabold text-base sm:text-lg uppercase tracking-wider glow-gold transition-all hover:scale-[1.02] active:scale-[0.98]">
+              <span>Fill Form To Register</span>
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.6" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+              </svg>
+            </a>
+
+            <a href="#action-stage"
+              class="sfx-click sfx-hover w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-7 py-4 rounded-2xl bg-pitch-800/80 hover:bg-pitch-700 border border-white/15 text-white font-semibold text-base transition-all">
+              <span>Watch Scroll Action</span>
+              <svg class="w-5 h-5 text-gold-400 animate-bounce" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+              </svg>
+            </a>
+          </div>
         </div>
 
-        <!-- COUNTDOWN TIMER SECTION -->
-        <section class="glass-card countdown-section">
-            <div class="countdown-title">Registration Closes In</div>
-            <div class="timer-grid">
-                <div class="time-box">
-                    <div class="time-value" id="days">00</div>
-                    <div class="time-label">Days</div>
-                </div>
-                <div class="time-box">
-                    <div class="time-value" id="hours">00</div>
-                    <div class="time-label">Hours</div>
-                </div>
-                <div class="time-box">
-                    <div class="time-value" id="minutes">00</div>
-                    <div class="time-label">Minutes</div>
-                </div>
-                <div class="time-box">
-                    <div class="time-value" id="seconds">00</div>
-                    <div class="time-label">Seconds</div>
-                </div>
-            </div>
-        </section>
-
-        <!-- FEATURED GAMES SECTION WITH EXPANDABLE CARDS -->
-        <section class="games-section">
-            <h2 class="section-title">Featured Titles</h2>
-            <p class="section-subtitle">Click on any game card to expand details</p>
-            
-            <div class="games-grid">
-                <!-- MINECRAFT CARD -->
-                <div class="glass-card game-card" onclick="toggleGameCard(this)">
-                    <i class="fa-solid fa-cube game-icon"></i>
-                    <h3>Minecraft</h3>
-                    <div class="click-hint">
-                        <span>Click to Expand</span>
-                        <i class="fa-solid fa-chevron-down"></i>
-                    </div>
-                    <div class="game-desc-wrapper">
-                        <div class="game-desc-content">
-                            <div class="game-desc-inner">
-                                Building Base, and Making Team.
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- GEOGUESSR CARD -->
-                <div class="glass-card game-card" onclick="toggleGameCard(this)">
-                    <i class="fa-solid fa-earth-americas game-icon"></i>
-                    <h3>Valorant</h3>
-                    <div class="click-hint">
-                        <span>Click to Expand</span>
-                        <i class="fa-solid fa-chevron-down"></i>
-                    </div>
-                    <div class="game-desc-wrapper">
-                        <div class="game-desc-content">
-                            <div class="game-desc-inner">
-                                Custom Match <br>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- FREE FIRE CARD -->
-                <div class="glass-card game-card" onclick="toggleGameCard(this)">
-                    <i class="fa-solid fa-crosshairs game-icon"></i>
-                    <h3>Free Fire</h3>
-                    <div class="click-hint">
-                        <span>Click to Expand</span>
-                        <i class="fa-solid fa-chevron-down"></i>
-                    </div>
-                    <div class="game-desc-wrapper">
-                        <div class="game-desc-content">
-                            <div class="game-desc-inner">
-                                5v5 or 6v6.
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- MAIN MATCH DETAILS GRID -->
-        <div class="grid-layout">
-            <div class="glass-card info-card">
-                <i class="fa-solid fa-calendar-days"></i>
-                <div class="info-content">
-                    <h3>Match Date</h3>
-                    <p>26th September 2026</p>
-                </div>
+        <!-- Right Hero Broadcast Match Card -->
+        <div class="lg:col-span-5">
+          <div class="relative rounded-3xl bg-gradient-to-b from-pitch-800/95 to-pitch-900/95 border border-white/15 p-6 sm:p-8 shadow-2xl backdrop-blur-md">
+            <div class="flex items-center justify-between pb-4 border-b border-white/10">
+              <div class="flex items-center gap-2">
+                <span class="w-2.5 h-2.5 rounded-full bg-cherry-500"></span>
+                <span class="font-mono text-xs font-bold uppercase tracking-[0.2em] text-gold-400">Official Match Card</span>
+              </div>
+              <span class="px-3 py-1 rounded-lg bg-turf-500/20 border border-turf-400/30 font-mono text-xs font-bold text-turf-300">
+                FREE ENTRY
+              </span>
             </div>
 
-            <div class="glass-card info-card">
-                <i class="fa-solid fa-clock"></i>
-                <div class="info-content">
-                    <h3>Time Slot</h3>
-                    <p>11:30 AM - 4:30 PM</p>
-                </div>
-            </div>
-
-            <div class="glass-card info-card">
-                <i class="fa-solid fa-globe"></i>
-                <div class="info-content">
-                    <h3>Mode</h3>
-                    <p>Online Tournament</p>
-                </div>
-            </div>
-
-            <div class="glass-card info-card">
-                <i class="fa-solid fa-sitemap"></i>
-                <div class="info-content">
-                    <h3>Match Format</h3>
-                    <p>Based on Player Count</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- TEAMS SHOWCASE -->
-        <section class="glass-card vs-section">
-            <h3 style="color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 1rem;">Clash of Factions</h3>
-            <div class="teams-container">
-                <div class="team-box">
-                    <i class="fa-solid fa-fire-flame-curved" style="font-size: 2.2rem; color: var(--primary); margin-bottom: 0.5rem;"></i>
-                    <h2>Team Alpha</h2>
-                </div>
-                <div class="vs-badge">VS</div>
-                <div class="team-box">
-                    <i class="fa-solid fa-bolt" style="font-size: 2.2rem; color: var(--secondary); margin-bottom: 0.5rem;"></i>
-                    <h2>Team Bravo</h2>
-                </div>
-            </div>
-        </section>
-
-        <!-- FEES & AWARDS BANNER -->
-        <div class="highlight-banner">
-            <div class="glass-card banner-card">
-                <h3>Entry Fee</h3>
-                <div class="price-tag">
-                    <span class="strike-through">Very High</span> ₹0
-                </div>
-                <p style="color: var(--text-muted); margin-top: 5px;">101% Free Entry</p>
-            </div>
-
-            <div class="glass-card banner-card">
-                <h3>Rewards & Recognition</h3>
-                <div style="font-size: 1.6rem; font-weight: 700; color: var(--accent); font-family: 'Orbitron', sans-serif; margin: 10px 0;">
-                    <i class="fa-solid fa-award"></i> Participation Certificate
-                </div>
-                <p style="color: var(--text-muted);">Official completion certificate for players</p>
-            </div>
-        </div>
-
-        <!-- CALL TO ACTION & DEADLINE -->
-        <div class="glass-card action-area">
-            <div class="deadline-text" id="deadline-heading">
-                <i class="fa-solid fa-triangle-exclamation"></i>
-                Last Date to Register: 21st September 2026 at 9:30 PM
-            </div>
-            
-            <div class="btn-group">
-                <a href="https://forms.gle/AvqXbhQeh8QLkGfs6" target="_blank" class="btn btn-register">
-                    <i class="fa-solid fa-pen-to-square"></i> Register Now
+            <div class="py-5 space-y-3.5">
+              <div class="flex items-center justify-between p-3.5 rounded-2xl bg-pitch-950/75 border border-white/5">
+                <span class="text-xs sm:text-sm text-slate-400">Series Window</span>
+                <span class="font-mono text-xs sm:text-sm font-bold text-white">Jan 2 – Jan 6 (Wednesday)</span>
+              </div>
+              <div class="flex items-center justify-between p-3.5 rounded-2xl bg-pitch-950/75 border border-white/5">
+                <span class="text-xs sm:text-sm text-slate-400">Match Format</span>
+                <span class="font-mono text-xs sm:text-sm font-bold text-cherry-400">Test • 2 Innings / Side</span>
+              </div>
+              <div class="flex items-center justify-between p-3.5 rounded-2xl bg-pitch-950/75 border border-white/5">
+                <span class="text-xs sm:text-sm text-slate-400">Series Rule</span>
+                <span class="font-mono text-xs sm:text-sm font-bold text-gold-400">Non-Lead Structure</span>
+              </div>
+              <div class="flex items-center justify-between p-3.5 rounded-2xl bg-pitch-950/75 border border-white/5">
+                <span class="text-xs sm:text-sm text-slate-400">Organiser</span>
+                <span class="font-mono text-xs sm:text-sm font-bold text-white">Aviral Pandey</span>
+              </div>
+              <div class="flex items-center justify-between p-3.5 rounded-2xl bg-pitch-950/75 border border-white/5">
+                <span class="text-xs sm:text-sm text-slate-400">Contact (WhatsApp Only)</span>
+                <a href="https://wa.me/919599112981" target="_blank" rel="noopener noreferrer"
+                  class="sfx-hover inline-flex items-center gap-1.5 font-mono text-xs sm:text-sm font-bold text-turf-400 hover:text-turf-300 transition-colors">
+                  <span>9599112981</span>
+                  <span class="px-1.5 py-0.5 rounded bg-turf-500/20 border border-turf-400/30 text-[10px] uppercase">WA</span>
                 </a>
-                <a href="https://discord.gg/n5ag7Z87hF" target="_blank" class="btn btn-discord">
-                    <i class="fa-brands fa-discord"></i> Join Discord
-                </a>
-                <a href="mailto:eclipse.nexus@outlook.com" class="btn btn-primary">
-                    <i class="fa-solid fa-envelope"></i> Contact Host
-                </a>
+              </div>
+              <div class="flex items-center justify-between p-3.5 rounded-2xl bg-pitch-950/75 border border-white/5">
+                <span class="text-xs sm:text-sm text-slate-400">Official Hub</span>
+                <span class="font-mono text-xs sm:text-sm font-bold text-turf-400">killersmp.qzz.io</span>
+              </div>
             </div>
+        <!-- 5. Tournament Organiser & WhatsApp Desk -->
+        <div class="reveal-card sfx-hover rounded-3xl bg-pitch-950/90 border border-white/10 hover:border-gold-400/50 p-7 transition-all group flex flex-col justify-between">
+          <div>
+            <div class="w-12 h-12 rounded-2xl bg-gold-500/15 border border-gold-400/30 flex items-center justify-center text-gold-400 mb-5 group-hover:scale-110 transition-transform">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+              </svg>
+            </div>
+            <span class="font-mono text-xs text-gold-400 uppercase tracking-widest">Organiser Desk</span>
+            <h3 class="font-display text-4xl text-white mt-1">AVIRAL PANDEY</h3>
+            <p class="text-slate-400 text-sm sm:text-base mt-2 leading-relaxed">
+              Officially organised by <strong class="text-white">Aviral Pandey</strong>. Reach out directly via WhatsApp for match queries and fixture coordination.
+            </p>
+          </div>
+          <div class="mt-5 pt-4 border-t border-white/10">
+            <a href="https://wa.me/919599112981" target="_blank" rel="noopener noreferrer"
+              class="sfx-click sfx-hover inline-flex items-center justify-between w-full px-4 py-2.5 rounded-xl bg-turf-500/15 hover:bg-turf-500/25 border border-turf-400/40 text-turf-300 font-mono text-xs sm:text-sm font-bold transition-all">
+              <span class="inline-flex items-center gap-2">
+                <svg class="w-4 h-4 text-turf-400" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.502-2.961-2.617-.087-.116-.708-.94-.708-1.793s.448-1.273.607-1.446c.159-.173.346-.217.462-.217l.332.006c.106.005.249-.04.39.298.144.347.491 1.2.534 1.287.043.087.072.188.014.304-.058.116-.087.188-.173.289l-.26.304c-.087.086-.177.18-.076.354.101.174.449.741.964 1.201.662.591 1.221.774 1.394.86s.274.072.376-.043c.101-.116.433-.506.549-.68.116-.173.231-.145.39-.087s1.011.477 1.184.564.289.13.332.202c.045.072.045.419-.1.824z"/>
+                </svg>
+                <span>9599112981</span>
+              </span>
+              <span class="text-[10px] uppercase tracking-wider px-2 py-0.5 rounded bg-turf-500/20 text-turf-200">WhatsApp Only</span>
+            </a>
+          </div>
         </div>
 
-        <!-- FOOTER -->
-        <footer>
-            <p>&copy; 2026 APT Studios (AAM OS). All rights reserved.</p>
-            <div class="contact-links">
-                <a href="https://forms.gle/AvqXbhQeh8QLkGfs6" target="_blank"><i class="fa-solid fa-pen-to-square"></i> Registration Form</a>
-                <a href="mailto:eclipse.nexus@outlook.com"><i class="fa-solid fa-envelope"></i> eclipse.nexus@outlook.com</a>
-                <a href="https://discord.gg/n5ag7Z87hF" target="_blank"><i class="fa-brands fa-discord"></i> Join Discord</a>
-            </div>
-        </footer>
+      </div>
     </div>
+  </section>
 
-    <!-- JAVASCRIPT LOGIC -->
-    <script>
-        // 1. GAME CARD EXPANSION LOGIC
-        function toggleGameCard(cardElement) {
-            const isCurrentlyActive = cardElement.classList.contains('active');
-            
-            // Collapse any currently open cards
-            document.querySelectorAll('.game-card').forEach(card => {
-                card.classList.remove('active');
-            });
+  <!-- =====================================================================
+       3. SCRUBBED SCROLL-DRIVEN KINETIC TYPOGRAPHY BAND
+  ====================================================================== -->
+  <section id="kinetic-ribbon" class="relative py-14 sm:py-20 bg-pitch-900 border-y border-white/10 overflow-hidden select-none">
+    <div class="space-y-3 sm:space-y-5">
+      <!-- Row 1: Moves Left on Scroll -->
+      <div id="marqueeRow1" class="whitespace-nowrap font-display text-5xl sm:text-7xl md:text-8xl tracking-wider uppercase will-change-transform">
+        <span class="text-white">FIVE DAYS OF PURE RED-BALL GRIT</span>
+        <span class="text-gold-400 mx-5">•</span>
+        <span class="text-outline-gold">TWO INNINGS TEST</span>
+        <span class="text-cherry-500 mx-5">•</span>
+        <span class="text-white">ZERO ENTRY FEE</span>
+        <span class="text-turf-400 mx-5">•</span>
+        <span class="text-outline-white">JANUARY 2 TO JANUARY 6</span>
+      </div>
 
-            // If it wasn't open previously, open it
-            if (!isCurrentlyActive) {
-                cardElement.classList.add('active');
-            }
+      <!-- Row 2: Moves Right on Scroll -->
+      <div id="marqueeRow2" class="whitespace-nowrap font-display text-5xl sm:text-7xl md:text-8xl tracking-wider uppercase will-change-transform -translate-x-1/4">
+        <span class="text-outline-white">NON-LEAD FORMAT</span>
+        <span class="text-cherry-500 mx-5">•</span>
+        <span class="text-gold-400">ORGANISED BY AVIRAL PANDEY</span>
+        <span class="text-turf-400 mx-5">•</span>
+        <span class="text-white">KILLERSMP.QZZ.IO</span>
+        <span class="text-gold-400 mx-5">•</span>
+        <span class="text-outline-gold">CHAMPIONSHIP WEDNESDAY</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- =====================================================================
+       4. INTERACTIVE SCROLL-DRIVEN CRICKET ACTION STAGE (380vh STICKY)
+          Act I (0–33%): Batsman Hitting Cover Drive
+          Act II (34–66%): Bowler Taking Wicket (Shattered Stumps)
+          Act III (67–100%): Keeper Doing Lightning Stumping
+  ====================================================================== -->
+  <section id="action-stage" class="relative h-[380vh] bg-pitch-950">
+    <div class="sticky top-0 h-screen w-full overflow-hidden flex flex-col justify-between">
+      
+      <!-- Responsive High-DPI Cricket Action Canvas -->
+      <canvas id="cricketCanvas" class="absolute inset-0 w-full h-full block"></canvas>
+
+      <!-- Top Broadcast HUD Bar -->
+      <div class="relative z-20 pt-20 sm:pt-24 px-4 sm:px-8 max-w-7xl mx-auto w-full flex flex-wrap items-center justify-between gap-3">
+        <div class="inline-flex items-center gap-3 px-4 py-2 rounded-2xl bg-pitch-900/90 border border-white/15 backdrop-blur-md">
+          <span id="actDot" class="w-3 h-3 rounded-full bg-gold-400 animate-pulse"></span>
+          <span id="actTitle" class="font-display text-2xl sm:text-3xl tracking-wider text-white">
+            ACT I: THE COVER DRIVE
+          </span>
+        </div>
+
+        <!-- Quick-Jump Act Buttons + Scroll Percentage -->
+        <div class="flex items-center gap-2 bg-pitch-900/90 border border-white/15 backdrop-blur-md p-1.5 rounded-2xl">
+          <button type="button" data-act="0" class="act-jump-btn sfx-click px-3 py-1.5 rounded-xl font-mono text-xs font-bold bg-gold-400 text-pitch-950 transition-all">
+            01. BATSMAN
+          </button>
+          <button type="button" data-act="1" class="act-jump-btn sfx-click px-3 py-1.5 rounded-xl font-mono text-xs font-bold text-slate-300 hover:text-white transition-all">
+            02. BOWLER
+          </button>
+          <button type="button" data-act="2" class="act-jump-btn sfx-click px-3 py-1.5 rounded-xl font-mono text-xs font-bold text-slate-300 hover:text-white transition-all">
+            03. KEEPER
+          </button>
+          <span id="progressReadout" class="px-2.5 font-mono text-xs font-bold text-gold-400">0%</span>
+        </div>
+      </div>
+
+      <!-- Scroll-Linked Kinetic Callout Cards -->
+      <div class="relative z-20 max-w-7xl mx-auto px-4 sm:px-8 w-full my-auto pointer-events-none">
+        
+        <!-- ACT I CALLOUT: BATSMAN HITTING SHOTS -->
+        <div id="callout0" class="max-w-lg will-change-transform">
+          <span class="font-mono text-xs sm:text-sm font-bold uppercase tracking-[0.25em] text-gold-400">
+            Session 01 • Front-Foot Mastery
+          </span>
+          <h2 class="font-display text-6xl sm:text-7xl md:text-8xl leading-[0.86] text-white mt-1 drop-shadow-2xl">
+            CRISP <span class="text-gold-400">COVER DRIVE</span>
+          </h2>
+          <p class="mt-3 text-slate-200 text-sm sm:text-base bg-pitch-950/75 backdrop-blur-md p-4 rounded-2xl border border-white/10">
+            Lean into the half-volley, split the extra-cover gap, and send the red cherry racing across the emerald turf toward the boundary rope.
+          </p>
+        </div>
+
+        <!-- ACT II CALLOUT: BOWLER TAKING WICKETS -->
+        <div id="callout1" class="max-w-lg ml-auto text-right opacity-0 will-change-transform">
+          <span class="font-mono text-xs sm:text-sm font-bold uppercase tracking-[0.25em] text-cherry-400">
+            Session 02 • Reverse Swing Yorker
+          </span>
+          <h2 class="font-display text-6xl sm:text-7xl md:text-8xl leading-[0.86] text-white mt-1 drop-shadow-2xl">
+            TIMBER! <span class="text-cherry-500">CLEAN BOWLED</span>
+          </h2>
+          <p class="mt-3 text-slate-200 text-sm sm:text-base bg-pitch-950/75 backdrop-blur-md p-4 rounded-2xl border border-white/10">
+            Late movement off the seam crashes straight into off and middle stump—sending wooden bails cartwheeling under the stadium lights.
+          </p>
+        </div>
+
+        <!-- ACT III CALLOUT: KEEPER DOING STUMPING -->
+        <div id="callout2" class="max-w-lg opacity-0 will-change-transform">
+          <span class="font-mono text-xs sm:text-sm font-bold uppercase tracking-[0.25em] text-turf-400">
+            Session 03 • Razor-Sharp Glovework
+          </span>
+          <h2 class="font-display text-6xl sm:text-7xl md:text-8xl leading-[0.86] text-white mt-1 drop-shadow-2xl">
+            OUT • <span class="text-turf-400">STUMPED!</span>
+          </h2>
+          <p class="mt-3 text-slate-200 text-sm sm:text-base bg-pitch-950/75 backdrop-blur-md p-4 rounded-2xl border border-white/10">
+            Beaten in the flight! The wicketkeeper gathers cleanly behind the stumps and whips the bails off before the back foot can ground.
+          </p>
+        </div>
+
+      </div>
+
+      <!-- Bottom Progress Bar & Direct Registration Link -->
+      <div class="relative z-20 pb-6 px-4 sm:px-8 max-w-7xl mx-auto w-full">
+        <div class="flex flex-wrap items-center justify-between gap-3 mb-3">
+          <span class="font-mono text-xs text-slate-300 bg-pitch-900/85 px-3.5 py-2 rounded-xl border border-white/10">
+            Scroll down or tap Acts 01–03 above to trigger stadium SFX
+          </span>
+          <a href="https://forms.gle/GdDVJZMJen6FktVQ8" target="_blank" rel="noopener noreferrer"
+            class="sfx-click sfx-hover inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-gold-400 hover:bg-gold-300 text-pitch-950 font-extrabold text-xs sm:text-sm uppercase tracking-wider shadow-lg transition-transform hover:scale-105">
+            <span>Fill Form • Free Entry</span>
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+            </svg>
+          </a>
+        </div>
+        <!-- Linear Scroll Scrub Track -->
+        <div class="w-full h-1.5 rounded-full bg-white/10 overflow-hidden">
+          <div id="scrubFillBar" class="h-full w-0 bg-gradient-to-r from-gold-400 via-cherry-500 to-turf-400 transition-all duration-75"></div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- =====================================================================
+       5. TOURNAMENT DOSSIER & MATCH SPECIFICATIONS GRID
+  ====================================================================== -->
+  <section id="dossier" class="relative py-24 sm:py-32 bg-pitch-900 border-t border-white/10 stadium-grid">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="max-w-3xl reveal-card">
+        <span class="font-mono text-xs sm:text-sm font-bold uppercase tracking-[0.25em] text-gold-400">
+          Tournament Specifications
+        </span>
+        <h2 class="font-display text-6xl sm:text-7xl md:text-8xl text-white mt-1 leading-none">
+          OFFICIAL <span class="text-cherry-500">SERIES DOSSIER</span>
+        </h2>
+        <p class="mt-4 text-slate-300 text-base sm:text-lg">
+          Review the core tournament structure, schedule window, and registration details before submitting your official entry form.
+        </p>
+      </div>
+
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mt-14">
+        
+        <!-- 1. Match Dates -->
+        <div class="reveal-card sfx-hover rounded-3xl bg-pitch-950/90 border border-white/10 hover:border-gold-400/50 p-7 transition-all group">
+          <div class="w-12 h-12 rounded-2xl bg-gold-500/15 border border-gold-400/30 flex items-center justify-center text-gold-400 mb-5 group-hover:scale-110 transition-transform">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <rect x="3" y="4" width="18" height="18" rx="3" />
+              <path d="M16 2v4M8 2v4M3 10h18" />
+            </svg>
+          </div>
+          <span class="font-mono text-xs text-gold-400 uppercase tracking-widest">5-Day Window</span>
+          <h3 class="font-display text-4xl text-white mt-1">JANUARY 2 – JANUARY 6</h3>
+          <p class="text-slate-400 text-sm sm:text-base mt-2 leading-relaxed">
+            Action kicks off on <strong class="text-white">January 2</strong> and builds across five intense days of Test cricket to the grand conclusion on <strong class="text-gold-300">Wednesday, January 6</strong>.
+          </p>
+        </div>
+
+        <!-- 2. Match Format -->
+        <div class="reveal-card sfx-hover rounded-3xl bg-pitch-950/90 border border-white/10 hover:border-cherry-500/50 p-7 transition-all group">
+          <div class="w-12 h-12 rounded-2xl bg-cherry-500/15 border border-cherry-400/30 flex items-center justify-center text-cherry-400 mb-5 group-hover:scale-110 transition-transform">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <circle cx="12" cy="12" r="9" />
+              <path d="M8.5 5.5c2 4 2 9 0 13M15.5 5.5c-2 4-2 9 0 13" stroke-dasharray="2 2" />
+            </svg>
+          </div>
+          <span class="font-mono text-xs text-cherry-400 uppercase tracking-widest">Red-Ball Classic</span>
+          <h3 class="font-display text-4xl text-white mt-1">2-INNINGS TEST FORMAT</h3>
+          <p class="text-slate-400 text-sm sm:text-base mt-2 leading-relaxed">
+            Authentic multi-innings Test cricket where patience, session control, bowling partnerships, and batting temperament decide the champion.
+          </p>
+        </div>
+
+        <!-- 3. Series Rule -->
+        <div class="reveal-card sfx-hover rounded-3xl bg-pitch-950/90 border border-white/10 hover:border-turf-400/50 p-7 transition-all group">
+          <div class="w-12 h-12 rounded-2xl bg-turf-500/15 border border-turf-400/30 flex items-center justify-center text-turf-400 mb-5 group-hover:scale-110 transition-transform">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+          </div>
+          <span class="font-mono text-xs text-turf-400 uppercase tracking-widest">Competitive Balance</span>
+          <h3 class="font-display text-4xl text-white mt-1">NON-LEAD SERIES</h3>
+          <p class="text-slate-400 text-sm sm:text-base mt-2 leading-relaxed">
+            Structured under <strong class="text-white">Non-Lead Test rules</strong>, ensuring every innings stays competitive and every session carries high-stakes momentum.
+          </p>
+        </div>
+
+        <!-- 4. Registration Fee -->
+        <div class="reveal-card sfx-hover rounded-3xl bg-pitch-950/90 border border-white/10 hover:border-turf-400/50 p-7 transition-all group">
+          <div class="w-12 h-12 rounded-2xl bg-turf-500/15 border border-turf-400/30 flex items-center justify-center text-turf-400 mb-5 group-hover:scale-110 transition-transform">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+          </div>
+          <span class="font-mono text-xs text-turf-400 uppercase tracking-widest">Open Access</span>
+          <h3 class="font-display text-4xl text-white mt-1">100% FREE ENTRY</h3>
+          <p class="text-slate-400 text-sm sm:text-base mt-2 leading-relaxed">
+            No registration fee required. Simply fill out the online registration form to confirm your spot on the official series roster.
+          </p>
+        </div>
+
+        <!-- 5. Tournament Organiser -->
+        <div class="reveal-card sfx-hover rounded-3xl bg-pitch-950/90 border border-white/10 hover:border-gold-400/50 p-7 transition-all group">
+          <div class="w-12 h-12 rounded-2xl bg-gold-500/15 border border-gold-400/30 flex items-center justify-center text-gold-400 mb-5 group-hover:scale-110 transition-transform">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+            </svg>
+          </div>
+          <span class="font-mono text-xs text-gold-400 uppercase tracking-widest">Series Management</span>
+          <h3 class="font-display text-4xl text-white mt-1">AVIRAL PANDEY</h3>
+          <p class="text-slate-400 text-sm sm:text-base mt-2 leading-relaxed">
+            Officially organised and hosted by <strong class="text-white">Aviral Pandey</strong> with full match coordination, fixture scheduling, and live series updates.
+          </p>
+        </div>
+
+        <!-- 6. Official Portal -->
+        <div class="reveal-card sfx-hover rounded-3xl bg-pitch-950/90 border border-white/10 hover:border-cherry-500/50 p-7 transition-all group">
+          <div class="w-12 h-12 rounded-2xl bg-cherry-500/15 border border-cherry-400/30 flex items-center justify-center text-cherry-400 mb-5 group-hover:scale-110 transition-transform">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9" />
+            </svg>
+          </div>
+          <span class="font-mono text-xs text-cherry-400 uppercase tracking-widest">Tournament Domain</span>
+          <h3 class="font-display text-4xl text-white mt-1">KILLERSMP.QZZ.IO</h3>
+          <p class="text-slate-400 text-sm sm:text-base mt-2 leading-relaxed">
+            Connected directly to <strong class="text-turf-400">killersmp.qzz.io</strong> for official tournament notices, player registration links, and match standings.
+          </p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- =====================================================================
+       6. 5-DAY SERIES ROADMAP (JAN 2 – JAN 6)
+  ====================================================================== -->
+  <section id="roadmap" class="relative py-24 bg-pitch-950 border-t border-white/10">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center max-w-2xl mx-auto mb-14 reveal-card">
+        <span class="font-mono text-xs sm:text-sm font-bold uppercase tracking-[0.25em] text-gold-400">
+          Five-Day Test Schedule
+        </span>
+        <h2 class="font-display text-6xl sm:text-7xl text-white mt-1">
+          SERIES <span class="text-turf-400">TIMELINE</span>
+        </h2>
+      </div>
+
+      <div class="grid sm:grid-cols-2 lg:grid-cols-5 gap-4 reveal-card">
+        <div class="p-6 rounded-2xl bg-pitch-900 border border-white/10 hover:border-gold-400/40 transition-colors">
+          <span class="font-mono text-xs font-bold text-gold-400">DAY 01 • JAN 2</span>
+          <h3 class="font-display text-3xl text-white mt-1">OPENING TOSS</h3>
+          <p class="text-sm text-slate-400 mt-2">Series inauguration, pitch inspection, and 1st Innings opening sessions.</p>
+        </div>
+
+        <div class="p-6 rounded-2xl bg-pitch-900 border border-white/10 hover:border-gold-400/40 transition-colors">
+          <span class="font-mono text-xs font-bold text-gold-400">DAY 02 • JAN 3</span>
+          <h3 class="font-display text-3xl text-white mt-1">MOVING DAY I</h3>
+          <p class="text-sm text-slate-400 mt-2">Middle-order resilience and new-ball breakthroughs under non-lead rules.</p>
+        </div>
+
+        <div class="p-6 rounded-2xl bg-pitch-900 border border-white/10 hover:border-gold-400/40 transition-colors">
+          <span class="font-mono text-xs font-bold text-cherry-400">DAY 03 • JAN 4</span>
+          <h3 class="font-display text-3xl text-white mt-1">SECOND INNINGS</h3>
+          <p class="text-sm text-slate-400 mt-2">Teams enter the decisive 2nd Innings phase as pitch conditions sharpen.</p>
+        </div>
+
+        <div class="p-6 rounded-2xl bg-pitch-900 border border-white/10 hover:border-gold-400/40 transition-colors">
+          <span class="font-mono text-xs font-bold text-turf-400">DAY 04 • JAN 5</span>
+          <h3 class="font-display text-3xl text-white mt-1">PRESSURE SESSIONS</h3>
+          <p class="text-sm text-slate-400 mt-2">Reverse swing, close-in fielding traps, and setting up the final-day chase.</p>
+        </div>
+
+        <div class="p-6 rounded-2xl bg-gradient-to-b from-gold-500/20 to-pitch-900 border border-gold-400/50">
+          <span class="font-mono text-xs font-bold text-gold-300">DAY 05 • JAN 6 (WED)</span>
+          <h3 class="font-display text-3xl text-white mt-1">CHAMPIONSHIP DAY</h3>
+          <p class="text-sm text-slate-200 mt-2">Final sessions on Wednesday, January 6 to crown the January Test Series winners.</p>
+        </div>
+      </div>
+
+      <!-- Interactive Stadium Soundboard Console -->
+      <div id="sfx-console" class="reveal-card mt-16 p-6 sm:p-8 rounded-3xl bg-pitch-900/90 border border-white/10 flex flex-col lg:flex-row items-center justify-between gap-6">
+        <div>
+          <span class="font-mono text-xs font-bold uppercase tracking-widest text-turf-400">Web Audio API Synthesizer</span>
+          <h3 class="font-display text-4xl text-white mt-1">STADIUM SFX SOUNDBOARD</h3>
+          <p class="text-sm text-slate-400 mt-1">Preview the synthesized cricket & stadium crowd effects anytime.</p>
+        </div>
+        <div class="flex flex-wrap items-center justify-center gap-3">
+          <button type="button" id="testBatBtn" class="px-4 py-2.5 rounded-xl bg-pitch-800 hover:bg-pitch-700 border border-gold-400/30 font-mono text-xs font-bold text-gold-300 transition-all active:scale-95">
+            🏏 BAT CRACK + ROAR
+          </button>
+          <button type="button" id="testWicketBtn" class="px-4 py-2.5 rounded-xl bg-pitch-800 hover:bg-pitch-700 border border-cherry-500/30 font-mono text-xs font-bold text-cherry-300 transition-all active:scale-95">
+            💥 SHATTER STUMPS
+          </button>
+          <button type="button" id="testStumpBtn" class="px-4 py-2.5 rounded-xl bg-pitch-800 hover:bg-pitch-700 border border-turf-400/30 font-mono text-xs font-bold text-turf-300 transition-all active:scale-95">
+            🧤 KEEPER STUMPING
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =====================================================================
+       7. FINAL CALL-TO-ACTION ARENA & FOOTER
+  ====================================================================== -->
+  <section class="relative py-24 bg-pitch-900 border-t border-white/10 overflow-hidden">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      <div class="reveal-card relative rounded-[2rem] bg-gradient-to-br from-pitch-800 via-pitch-950 to-pitch-800 border border-gold-400/35 p-8 sm:p-14 text-center glow-gold overflow-hidden">
+        <div class="pointer-events-none absolute -top-24 left-1/2 -translate-x-1/2 w-[520px] h-[240px] bg-gold-400/15 blur-[100px] rounded-full"></div>
+
+        <span class="inline-block px-4 py-1.5 rounded-full bg-turf-500/15 border border-turf-400/30 font-mono text-xs font-bold uppercase tracking-[0.22em] text-turf-300 mb-4">
+          Official Registration Open • Free Entry
+        </span>
+
+        <h2 class="font-display text-5xl sm:text-7xl md:text-8xl text-white leading-none">
+          CLAIM YOUR <span class="text-gold-400">TEST CAP</span>
+        </h2>
+
+        <p class="mt-4 text-slate-300 text-base sm:text-lg max-w-2xl mx-auto leading-relaxed">
+          Step onto the pitch for the <strong class="text-white">January Test Series (Jan 2 – Jan 6)</strong>. Complete the official registration form or message organiser <strong class="text-white">Aviral Pandey</strong> on WhatsApp.
+        </p>
+
+        <!-- Centered Outer Wrapper + Symmetric Fit-Content Pill Container -->
+        <div class="mt-8 w-full flex justify-center items-center">
+          <div class="inline-flex flex-col sm:flex-row items-center justify-center gap-4 p-3 mx-auto w-fit max-w-full rounded-3xl sm:rounded-full bg-pitch-950/75 border border-turf-400/25 shadow-inner">
+            <a href="https://forms.gle/GdDVJZMJen6FktVQ8" target="_blank" rel="noopener noreferrer"
+              class="sfx-click sfx-hover w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-7 py-4 rounded-2xl sm:rounded-full bg-gradient-to-r from-gold-400 to-gold-500 hover:from-gold-300 hover:to-gold-400 text-pitch-950 font-mono font-extrabold text-sm sm:text-base uppercase tracking-wider shadow-lg transition-all hover:scale-[1.02] active:scale-[0.98] whitespace-nowrap">
+              <span>Fill Form Now</span>
+              <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" stroke-width="2.6" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+              </svg>
+            </a>
+
+            <a href="https://wa.me/919599112981" target="_blank" rel="noopener noreferrer"
+              class="sfx-click sfx-hover w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-7 py-4 rounded-2xl sm:rounded-full bg-turf-500/15 hover:bg-turf-500/25 border border-turf-400/40 text-turf-200 font-mono font-bold text-sm sm:text-base uppercase tracking-wider transition-all hover:scale-[1.02] active:scale-[0.98] whitespace-nowrap">
+              <span>WhatsApp Organiser: 9599112981</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="bg-pitch-950 border-t border-white/10 py-10">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-slate-400">
+      <div class="text-center md:text-left">
+        <span class="font-display text-2xl tracking-wider text-white">
+          JANUARY <span class="text-gold-400">TEST SERIES</span>
+        </span>
+        <span class="block sm:inline sm:ml-3 font-mono text-xs text-slate-400">
+          Organiser: <strong class="text-white">Aviral Pandey</strong> • Hub: <span class="text-turf-400">killersmp.qzz.io</span>
+        </span>
+      </div>
+      <div class="flex flex-wrap items-center justify-center gap-4 sm:gap-6">
+        <a href="https://wa.me/919599112981" target="_blank" rel="noopener noreferrer"
+          class="sfx-click sfx-hover inline-flex items-center gap-1.5 font-mono text-xs font-bold text-turf-400 hover:text-turf-300">
+          <span>WhatsApp Only: 9599112981</span>
+        </a>
+        <a href="https://forms.gle/GdDVJZMJen6FktVQ8" target="_blank" rel="noopener noreferrer"
+          class="sfx-click font-mono text-xs font-bold uppercase tracking-wider text-gold-400 hover:text-gold-300 underline">
+          Fill Official Registration Form →
+        </a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- =====================================================================
+       JAVASCRIPT: WEB AUDIO SFX ENGINE + SCROLL CHOREOGRAPHY + CANVAS
+  ====================================================================== -->
+  <script>
+    (() => {
+      /* -------------------------------------------------------------------
+         1. WEB AUDIO API PROCEDURAL STADIUM SFX ENGINE
+      -------------------------------------------------------------------- */
+      class StadiumSFX {
+        constructor() {
+          this.ctx = null;
+          this.enabled = false;
+          this.lastSceneSound = -1;
+          this.lastSoundTime = 0;
         }
 
-        // 2. LIVE COUNTDOWN TIMER LOGIC
-        // Target: September 21st, 2026 at 9:30 PM (21:30:00)
-        const targetDate = new Date("September 21, 2026 21:30:00").getTime();
-
-        function updateTimer() {
-            const now = new Date().getTime();
-            const diff = targetDate - now;
-
-            if (diff <= 0) {
-                document.getElementById("days").innerText = "00";
-                document.getElementById("hours").innerText = "00";
-                document.getElementById("minutes").innerText = "00";
-                document.getElementById("seconds").innerText = "00";
-                
-                const deadlineElem = document.getElementById("deadline-heading");
-                if (deadlineElem) {
-                    deadlineElem.innerHTML = "<i class='fa-solid fa-lock'></i> Registration Closed";
-                }
-                return;
-            }
-
-            const d = Math.floor(diff / (1000 * 60 * 60 * 24));
-            const h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-            const s = Math.floor((diff % (1000 * 60)) / 1000);
-
-            document.getElementById("days").innerText = String(d).padStart(2, '0');
-            document.getElementById("hours").innerText = String(h).padStart(2, '0');
-            document.getElementById("minutes").innerText = String(m).padStart(2, '0');
-            document.getElementById("seconds").innerText = String(s).padStart(2, '0');
+        ensureContext() {
+          if (!this.ctx) {
+            const AudioCtx = window.AudioContext || window.webkitAudioContext;
+            this.ctx = new AudioCtx();
+          }
+          if (this.ctx.state === 'suspended') {
+            this.ctx.resume();
+          }
         }
 
-        // Initialize timer immediately and set tick interval
-        updateTimer();
-        setInterval(updateTimer, 1000);
-    </script>
+        enable() {
+          this.ensureContext();
+          this.enabled = true;
+          this.updateUI();
+        }
+
+        toggle() {
+          this.ensureContext();
+          this.enabled = !this.enabled;
+          this.updateUI();
+          if (this.enabled) {
+            this.playBatCrack(0.45);
+          }
+        }
+
+        updateUI() {
+          const btn = document.getElementById('sfxToggleBtn');
+          const eq = document.getElementById('eqBars');
+          const desk = document.getElementById('sfxStatusDesktop');
+          const mob = document.getElementById('sfxStatusMobile');
+          if (this.enabled) {
+            eq.classList.add('eq-on');
+            btn.classList.add('border-gold-400/60', 'bg-gold-500/15', 'text-gold-300');
+            desk.textContent = 'SFX ACTIVE';
+            mob.textContent = 'ON';
+          } else {
+            eq.classList.remove('eq-on');
+            btn.classList.remove('border-gold-400/60', 'bg-gold-500/15', 'text-gold-300');
+            desk.textContent = 'ENABLE SFX';
+            mob.textContent = 'SFX';
+          }
+        }
+
+        // Filtered stadium crowd cheer swell
+        playCrowdRoar(duration = 1.1, peak = 0.16) {
+          if (!this.enabled || !this.ctx) return;
+          const now = this.ctx.currentTime;
+          const length = Math.floor(this.ctx.sampleRate * duration);
+          const buffer = this.ctx.createBuffer(1, length, this.ctx.sampleRate);
+          const data = buffer.getChannelData(0);
+          for (let i = 0; i < length; i++) {
+            data[i] = (Math.random() * 2 - 1);
+          }
+
+          const noise = this.ctx.createBufferSource();
+          noise.buffer = buffer;
+
+          const filter = this.ctx.createBiquadFilter();
+          filter.type = 'bandpass';
+          filter.frequency.setValueAtTime(650, now);
+          filter.frequency.exponentialRampToValueAtTime(1150, now + duration * 0.35);
+          filter.frequency.exponentialRampToValueAtTime(480, now + duration);
+          filter.Q.setValueAtTime(0.9, now);
+
+          const gain = this.ctx.createGain();
+          gain.gain.setValueAtTime(0.001, now);
+          gain.gain.linearRampToValueAtTime(peak, now + duration * 0.22);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + duration);
+
+          noise.connect(filter);
+          filter.connect(gain);
+          gain.connect(this.ctx.destination);
+          noise.start(now);
+        }
+
+        // Willow bat crack + crowd swell
+        playBatCrack(vol = 0.65) {
+          if (!this.enabled || !this.ctx) return;
+          const now = this.ctx.currentTime;
+
+          // Low-mid willow body punch
+          const osc = this.ctx.createOscillator();
+          const oscGain = this.ctx.createGain();
+          osc.type = 'triangle';
+          osc.frequency.setValueAtTime(560, now);
+          osc.frequency.exponentialRampToValueAtTime(92, now + 0.09);
+          oscGain.gain.setValueAtTime(vol, now);
+          oscGain.gain.exponentialRampToValueAtTime(0.001, now + 0.095);
+          osc.connect(oscGain);
+          oscGain.connect(this.ctx.destination);
+          osc.start(now);
+          osc.stop(now + 0.1);
+
+          // Crisp leather seam slap
+          const len = Math.floor(this.ctx.sampleRate * 0.11);
+          const buf = this.ctx.createBuffer(1, len, this.ctx.sampleRate);
+          const ch = buf.getChannelData(0);
+          for (let i = 0; i < len; i++) {
+            ch[i] = (Math.random() * 2 - 1) * Math.exp(-i / (this.ctx.sampleRate * 0.016));
+          }
+          const src = this.ctx.createBufferSource();
+          src.buffer = buf;
+
+          const bp = this.ctx.createBiquadFilter();
+          bp.type = 'bandpass';
+          bp.frequency.setValueAtTime(2100, now);
+          bp.Q.setValueAtTime(1.6, now);
+
+          const nGain = this.ctx.createGain();
+          nGain.gain.setValueAtTime(vol * 0.95, now);
+          nGain.gain.exponentialRampToValueAtTime(0.001, now + 0.11);
+
+          src.connect(bp);
+          bp.connect(nGain);
+          nGain.connect(this.ctx.destination);
+          src.start(now);
+
+          this.playCrowdRoar(1.15, vol * 0.25);
+        }
+
+        // Shattering wooden stumps + metallic bail chime
+        playWicketShatter(vol = 0.65) {
+          if (!this.enabled || !this.ctx) return;
+          const now = this.ctx.currentTime;
+          const delays = [0, 0.04, 0.095, 0.15];
+          const freqs = [640, 880, 1280, 1760];
+
+          delays.forEach((d, i) => {
+            const t = now + d;
+            const osc = this.ctx.createOscillator();
+            const g = this.ctx.createGain();
+            osc.type = i === 3 ? 'sine' : 'triangle';
+            osc.frequency.setValueAtTime(freqs[i], t);
+            osc.frequency.exponentialRampToValueAtTime(160, t + 0.11);
+            g.gain.setValueAtTime(vol * (1 - i * 0.16), t);
+            g.gain.exponentialRampToValueAtTime(0.001, t + 0.115);
+            osc.connect(g);
+            g.connect(this.ctx.destination);
+            osc.start(t);
+            osc.stop(t + 0.12);
+          });
+
+          this.playCrowdRoar(1.3, vol * 0.3);
+        }
+
+        // Keeper leather glove snap + crisp bail whip
+        playStumping(vol = 0.6) {
+          if (!this.enabled || !this.ctx) return;
+          const now = this.ctx.currentTime;
+
+          // Leather glove thud
+          const osc = this.ctx.createOscillator();
+          const g = this.ctx.createGain();
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(220, now);
+          osc.frequency.exponentialRampToValueAtTime(58, now + 0.075);
+          g.gain.setValueAtTime(vol, now);
+          g.gain.exponentialRampToValueAtTime(0.001, now + 0.08);
+          osc.connect(g);
+          g.connect(this.ctx.destination);
+          osc.start(now);
+          osc.stop(now + 0.085);
+
+          // Bail knock 48ms later
+          const bail = this.ctx.createOscillator();
+          const bg = this.ctx.createGain();
+          bail.type = 'triangle';
+          bail.frequency.setValueAtTime(1420, now + 0.048);
+          bail.frequency.exponentialRampToValueAtTime(390, now + 0.125);
+          bg.gain.setValueAtTime(vol * 0.85, now + 0.048);
+          bg.gain.exponentialRampToValueAtTime(0.001, now + 0.13);
+          bail.connect(bg);
+          bg.connect(this.ctx.destination);
+          bail.start(now + 0.048);
+          bail.stop(now + 0.135);
+
+          this.playCrowdRoar(1.0, vol * 0.22);
+        }
+
+        // Subtle broadcast UI tick
+        playUITick() {
+          if (!this.enabled || !this.ctx) return;
+          const now = this.ctx.currentTime;
+          const osc = this.ctx.createOscillator();
+          const g = this.ctx.createGain();
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(1050, now);
+          osc.frequency.exponentialRampToValueAtTime(520, now + 0.025);
+          g.gain.setValueAtTime(0.07, now);
+          g.gain.exponentialRampToValueAtTime(0.001, now + 0.028);
+          osc.connect(g);
+          g.connect(this.ctx.destination);
+          osc.start(now);
+          osc.stop(now + 0.03);
+        }
+
+        triggerAct(actIdx) {
+          const now = performance.now();
+          if (this.lastSceneSound === actIdx && now - this.lastSoundTime < 1200) return;
+          this.lastSceneSound = actIdx;
+          this.lastSoundTime = now;
+
+          if (actIdx === 0) this.playBatCrack(0.6);
+          else if (actIdx === 1) this.playWicketShatter(0.65);
+          else if (actIdx === 2) this.playStumping(0.6);
+        }
+      }
+
+      const sfx = new StadiumSFX();
+
+      // Auto-unlock audio context on first user click anywhere
+      const autoUnlock = () => {
+        if (!sfx.enabled) {
+          sfx.enable();
+        }
+        window.removeEventListener('pointerdown', autoUnlock);
+      };
+      window.addEventListener('pointerdown', autoUnlock, { once: true });
+
+      document.getElementById('sfxToggleBtn').addEventListener('click', (e) => {
+        e.stopPropagation();
+        sfx.toggle();
+      });
+
+      // Soundboard Test Buttons
+      document.getElementById('testBatBtn').addEventListener('click', () => {
+        if (!sfx.enabled) sfx.enable();
+        sfx.playBatCrack(0.7);
+      });
+      document.getElementById('testWicketBtn').addEventListener('click', () => {
+        if (!sfx.enabled) sfx.enable();
+        sfx.playWicketShatter(0.7);
+      });
+      document.getElementById('testStumpBtn').addEventListener('click', () => {
+        if (!sfx.enabled) sfx.enable();
+        sfx.playStumping(0.7);
+      });
+
+      document.querySelectorAll('.sfx-hover').forEach(el => {
+        el.addEventListener('mouseenter', () => sfx.playUITick());
+      });
+      document.querySelectorAll('.sfx-click').forEach(el => {
+        el.addEventListener('click', () => {
+          if (!sfx.enabled) sfx.enable();
+          sfx.playBatCrack(0.45);
+        });
+      });
+
+      /* -------------------------------------------------------------------
+         2. HERO AMBIENT STADIUM DUST PARTICLES
+      -------------------------------------------------------------------- */
+      const dustCanvas = document.getElementById('heroDustCanvas');
+      const dCtx = dustCanvas.getContext('2d');
+      let dustParticles = [];
+
+      function initDust() {
+        dustCanvas.width = dustCanvas.clientWidth;
+        dustCanvas.height = dustCanvas.clientHeight;
+        dustParticles = Array.from({ length: 42 }, () => ({
+          x: Math.random() * dustCanvas.width,
+          y: Math.random() * dustCanvas.height,
+          r: Math.random() * 2 + 0.6,
+          vx: (Math.random() - 0.5) * 0.35,
+          vy: -Math.random() * 0.3 - 0.1,
+          a: Math.random() * 0.5 + 0.15
+        }));
+      }
+      initDust();
+      window.addEventListener('resize', initDust);
+
+      function renderDust() {
+        dCtx.clearRect(0, 0, dustCanvas.width, dustCanvas.height);
+        for (const p of dustParticles) {
+          p.x += p.vx;
+          p.y += p.vy;
+          if (p.y < 0) p.y = dustCanvas.height;
+          if (p.x < 0) p.x = dustCanvas.width;
+          if (p.x > dustCanvas.width) p.x = 0;
+
+          dCtx.fillStyle = `rgba(250, 204, 21, ${p.a})`;
+          dCtx.beginPath();
+          dCtx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+          dCtx.fill();
+        }
+        requestAnimationFrame(renderDust);
+      }
+      renderDust();
+
+      /* -------------------------------------------------------------------
+         3. SCRUBBED KINETIC TYPOGRAPHY RIBBON + SCROLL REVEALS
+      -------------------------------------------------------------------- */
+      const row1 = document.getElementById('marqueeRow1');
+      const row2 = document.getElementById('marqueeRow2');
+
+      function updateKineticRibbon() {
+        const scrollY = window.scrollY;
+        const shift = (scrollY * 0.28) % 600;
+        if (row1) row1.style.transform = `translate3d(${-shift}px, 0, 0)`;
+        if (row2) row2.style.transform = `translate3d(${shift - 300}px, 0, 0)`;
+      }
+      window.addEventListener('scroll', updateKineticRibbon, { passive: true });
+      updateKineticRibbon();
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+          }
+        });
+      }, { threshold: 0.12 });
+
+      document.querySelectorAll('.reveal-card').forEach(el => observer.observe(el));
+
+      /* -------------------------------------------------------------------
+         4. SCROLL-CHOREOGRAPHED 3-ACT CRICKET ACTION STAGE
+      -------------------------------------------------------------------- */
+      const stageSection = document.getElementById('action-stage');
+      const canvas = document.getElementById('cricketCanvas');
+      const ctx = canvas.getContext('2d');
+
+      const actDot = document.getElementById('actDot');
+      const actTitle = document.getElementById('actTitle');
+      const progressReadout = document.getElementById('progressReadout');
+      const scrubFillBar = document.getElementById('scrubFillBar');
+      const jumpBtns = document.querySelectorAll('.act-jump-btn');
+      const callouts = [
+        document.getElementById('callout0'),
+        document.getElementById('callout1'),
+        document.getElementById('callout2')
+      ];
+
+      let W = 0, H = 0, dpr = 1;
+      function resizeStage() {
+        W = canvas.clientWidth;
+        H = canvas.clientHeight;
+        dpr = Math.min(window.devicePixelRatio || 1, 2);
+        canvas.width = Math.floor(W * dpr);
+        canvas.height = Math.floor(H * dpr);
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      }
+      window.addEventListener('resize', resizeStage);
+      resizeStage();
+
+      let targetP = 0;
+      let smoothP = 0;
+      let triggeredImpacts = { 0: false, 1: false, 2: false };
+
+      function computeScrollProgress() {
+        const rect = stageSection.getBoundingClientRect();
+        const total = rect.height - window.innerHeight;
+        if (total <= 0) {
+          targetP = 0;
+          return;
+        }
+        targetP = Math.max(0, Math.min(1, -rect.top / total));
+      }
+      window.addEventListener('scroll', computeScrollProgress, { passive: true });
+      computeScrollProgress();
+
+      // Quick-jump buttons scroll smoothly to the exact moment of each act
+      jumpBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          const act = Number(btn.dataset.act);
+          const stageTop = stageSection.offsetTop;
+          const scrollable = stageSection.offsetHeight - window.innerHeight;
+          const targetRatios = [0.17, 0.51, 0.84];
+          window.scrollTo({
+            top: stageTop + scrollable * targetRatios[act],
+            behavior: 'smooth'
+          });
+        });
+      });
+
+      // Draw Night Stadium Pitch & Floodlight Backdrop
+      function drawStadium(p) {
+        const sky = ctx.createLinearGradient(0, 0, 0, H);
+        sky.addColorStop(0, '#030705');
+        sky.addColorStop(0.56, '#091812');
+        sky.addColorStop(1, '#04140d');
+        ctx.fillStyle = sky;
+        ctx.fillRect(0, 0, W, H);
+
+        // Twin Stadium Light Towers
+        [W * 0.17, W * 0.83].forEach(lx => {
+          const ly = H * 0.13;
+          const beam = ctx.createRadialGradient(lx, ly, 10, lx, ly, Math.max(W, H) * 0.65);
+          beam.addColorStop(0, 'rgba(255, 255, 255, 0.22)');
+          beam.addColorStop(0.3, 'rgba(250, 204, 21, 0.05)');
+          beam.addColorStop(1, 'rgba(4, 8, 6, 0)');
+          ctx.fillStyle = beam;
+          ctx.beginPath();
+          ctx.arc(lx, ly, Math.max(W, H) * 0.65, 0, Math.PI * 2);
+          ctx.fill();
+
+          ctx.fillStyle = 'rgba(248, 250, 252, 0.9)';
+          ctx.fillRect(lx - 26, ly - 7, 52, 13);
+        });
+
+        // Distant Crowd Tier Silhouette
+        const horizonY = H * 0.71;
+        ctx.fillStyle = '#060e0b';
+        ctx.beginPath();
+        ctx.moveTo(0, horizonY);
+        ctx.quadraticCurveTo(W * 0.5, horizonY - H * 0.14, W, horizonY);
+        ctx.lineTo(W, H);
+        ctx.lineTo(0, H);
+        ctx.closePath();
+        ctx.fill();
+
+        // Lush Emerald Outfield
+        const turf = ctx.createLinearGradient(0, horizonY, 0, H);
+        turf.addColorStop(0, '#064e3b');
+        turf.addColorStop(0.5, '#047857');
+        turf.addColorStop(1, '#022c22');
+        ctx.fillStyle = turf;
+        ctx.fillRect(0, horizonY, W, H - horizonY);
+
+        // Perspective Test Pitch Strip
+        const cx = W * 0.5 + (0.5 - p) * 36;
+        const topW = Math.min(125, W * 0.16);
+        const botW = Math.min(390, W * 0.5);
+
+        ctx.fillStyle = '#d8c8a8';
+        ctx.beginPath();
+        ctx.moveTo(cx - topW * 0.5, horizonY);
+        ctx.lineTo(cx + topW * 0.5, horizonY);
+        ctx.lineTo(cx + botW * 0.5, H);
+        ctx.lineTo(cx - botW * 0.5, H);
+        ctx.closePath();
+        ctx.fill();
+
+        // Popping & Bowling Crease White Lines
+        const creaseY = horizonY + (H - horizonY) * 0.48;
+        ctx.strokeStyle = 'rgba(255, 255, 255, 0.88)';
+        ctx.lineWidth = 4;
+        ctx.beginPath();
+        ctx.moveTo(cx - botW * 0.36, creaseY);
+        ctx.lineTo(cx + botW * 0.36, creaseY);
+        ctx.stroke();
+
+        return { cx, horizonY, creaseY };
+      }
+
+      // Draw Wooden Stumps & Flying Bails
+      function drawWickets(x, baseY, scale, shatterT = 0, bailOnly = false) {
+        const w = 7 * scale;
+        const h = 76 * scale;
+        const gap = 15 * scale;
+
+        for (let i = -1; i <= 1; i++) {
+          ctx.save();
+          ctx.translate(x + i * gap, baseY);
+
+          if (!bailOnly && shatterT > 0) {
+            if (i === 1) {
+              ctx.translate(shatterT * 110 * scale, -shatterT * 75 * scale);
+              ctx.rotate(shatterT * 4.8);
+            } else if (i === 0) {
+              ctx.translate(shatterT * 28 * scale, -shatterT * 20 * scale);
+              ctx.rotate(shatterT * 0.65);
+            }
+          }
+
+          const wood = ctx.createLinearGradient(-w / 2, -h, w / 2, 0);
+          wood.addColorStop(0, '#fef08a');
+          wood.addColorStop(1, '#b45309');
+          ctx.fillStyle = wood;
+          ctx.beginPath();
+          ctx.roundRect(-w / 2, -h, w, h, 3 * scale);
+          ctx.fill();
+          ctx.restore();
+        }
+
+        // Bails
+        [-1, 1].forEach((side, idx) => {
+          ctx.save();
+          ctx.translate(x + side * (gap * 0.5), baseY - h - 3 * scale);
+          if (shatterT > 0) {
+            const dir = idx === 0 ? -1 : 1;
+            ctx.translate(dir * shatterT * 92 * scale, -shatterT * 125 * scale + shatterT * shatterT * 95 * scale);
+            ctx.rotate(dir * shatterT * 7.2);
+          }
+          ctx.fillStyle = shatterT > 0 ? '#ef4444' : '#facc15';
+          ctx.shadowColor = shatterT > 0 ? '#ef4444' : 'transparent';
+          ctx.shadowBlur = shatterT > 0 ? 16 : 0;
+          ctx.fillRect(-gap * 0.45, -3 * scale, gap * 0.9, 5 * scale);
+          ctx.restore();
+        });
+      }
+
+      // Draw Red Cherry Test Ball with Seam
+      function drawRedCherry(x, y, r) {
+        ctx.save();
+        ctx.translate(x, y);
+        const grad = ctx.createRadialGradient(-r * 0.3, -r * 0.3, r * 0.1, 0, 0, r);
+        grad.addColorStop(0, '#f87171');
+        grad.addColorStop(0.55, '#dc2626');
+        grad.addColorStop(1, '#7f1d1d');
+        ctx.fillStyle = grad;
+        ctx.beginPath();
+        ctx.arc(0, 0, r, 0, Math.PI * 2);
+        ctx.fill();
+
+        // White stitched seam
+        ctx.strokeStyle = 'rgba(255, 255, 255, 0.85)';
+        ctx.lineWidth = Math.max(1.2, r * 0.16);
+        ctx.setLineDash([2, 2]);
+        ctx.beginPath();
+        ctx.arc(0, 0, r * 0.72, -0.8, 0.8);
+        ctx.stroke();
+        ctx.restore();
+      }
+
+      /* -------------------------------------------------------------------
+         ACT I (0.00 -> 0.33): BATSMAN HITTING CRISP COVER DRIVE
+      -------------------------------------------------------------------- */
+      function renderActOne(localP, env) {
+        const s = Math.min(W, H) / 660;
+        const bx = env.cx - 48 * s;
+        const by = env.creaseY + 18 * s;
+
+        drawWickets(env.cx + 36 * s, env.creaseY - 6 * s, s * 0.95, 0);
+
+        const impactP = 0.44;
+        const batAngle = localP < impactP
+          ? -1.4 + (localP / impactP) * 1.65
+          : 0.25 + ((localP - impactP) / (1 - impactP)) * 1.9;
+
+        // Batsman Figure
+        ctx.save();
+        ctx.translate(bx, by);
+
+        // Ground shadow
+        ctx.fillStyle = 'rgba(0,0,0,0.35)';
+        ctx.beginPath();
+        ctx.ellipse(0, 6 * s, 50 * s, 12 * s, 0, 0, Math.PI * 2);
+        ctx.fill();
+
+        // White Test Flannels & Batting Pads
+        ctx.strokeStyle = '#f8fafc';
+        ctx.lineWidth = 14 * s;
+        ctx.lineCap = 'round';
+        ctx.beginPath();
+        ctx.moveTo(-12 * s, -64 * s);
+        ctx.lineTo(-26 * s, 0);
+        ctx.stroke();
+
+        const stride = Math.min(1, localP * 1.7) * 28 * s;
+        ctx.beginPath();
+        ctx.moveTo(4 * s, -64 * s);
+        ctx.lineTo(18 * s + stride, 2 * s);
+        ctx.stroke();
+
+        // Crisp Test Jersey Torso
+        ctx.fillStyle = '#f1f5f9';
+        ctx.beginPath();
+        ctx.roundRect(-20 * s, -132 * s, 38 * s, 72 * s, 14 * s);
+        ctx.fill();
+
+        // Emerald Test Helmet & Gold Grille
+        ctx.fillStyle = '#064e3b';
+        ctx.beginPath();
+        ctx.arc(4 * s, -152 * s, 20 * s, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.strokeStyle = '#facc15';
+        ctx.lineWidth = 3 * s;
+        ctx.beginPath();
+        ctx.arc(8 * s, -150 * s, 16 * s, -0.4, 0.7);
+        ctx.stroke();
+
+        // Bat Swing
+        ctx.save();
+        ctx.translate(8 * s, -112 * s);
+        ctx.rotate(batAngle);
+
+        if (localP > 0.24 && localP < 0.78) {
+          ctx.strokeStyle = 'rgba(250, 204, 21, 0.35)';
+          ctx.lineWidth = 22 * s;
+          ctx.beginPath();
+          ctx.arc(0, 0, 88 * s, -1.1, 0.15);
+          ctx.stroke();
+        }
+
+        ctx.fillStyle = '#1e293b';
+        ctx.fillRect(-4 * s, 0, 8 * s, 28 * s);
+        const willow = ctx.createLinearGradient(-9 * s, 28 * s, 9 * s, 112 * s);
+        willow.addColorStop(0, '#fef08a');
+        willow.addColorStop(1, '#d97706');
+        ctx.fillStyle = willow;
+        ctx.beginPath();
+        ctx.roundRect(-9 * s, 28 * s, 18 * s, 84 * s, 4 * s);
+        ctx.fill();
+        ctx.restore();
+        ctx.restore();
+
+        // Ball trajectory
+        const contactX = bx + 36 * s;
+        const contactY = by - 46 * s;
+        let ballX, ballY, ballR;
+
+        if (localP < impactP) {
+          const t = localP / impactP;
+          ballX = env.cx + (1 - t) * 240 * s + 24 * s;
+          ballY = env.horizonY + t * (contactY - env.horizonY);
+          ballR = (5 + t * 4.5) * s;
+        } else {
+          if (!triggeredImpacts[0]) {
+            sfx.triggerAct(0);
+            triggeredImpacts[0] = true;
+          }
+          const t = (localP - impactP) / (1 - impactP);
+          // Rocket cover drive across extra-cover turf!
+          ballX = contactX + t * (W * 0.56);
+          ballY = contactY - Math.sin(t * Math.PI * 0.55) * (H * 0.34);
+          ballR = Math.max(4, (9.5 - t * 4)) * s;
+
+          // Impact Shockwave Ring
+          if (t < 0.35) {
+            const st = t / 0.35;
+            ctx.strokeStyle = `rgba(250, 204, 21, ${1 - st})`;
+            ctx.lineWidth = 4 * s;
+            ctx.beginPath();
+            ctx.arc(contactX, contactY, st * 95 * s, 0, Math.PI * 2);
+            ctx.stroke();
+          }
+
+          // Golden Boundary Trail
+          const trail = ctx.createLinearGradient(contactX, contactY, ballX, ballY);
+          trail.addColorStop(0, 'rgba(250, 204, 21, 0)');
+          trail.addColorStop(1, 'rgba(250, 204, 21, 0.85)');
+          ctx.strokeStyle = trail;
+          ctx.lineWidth = 7 * s;
+          ctx.lineCap = 'round';
+          ctx.beginPath();
+          ctx.moveTo(contactX, contactY);
+          ctx.lineTo(ballX, ballY);
+          ctx.stroke();
+        }
+
+        drawRedCherry(ballX, ballY, ballR);
+      }
+
+      /* -------------------------------------------------------------------
+         ACT II (0.34 -> 0.66): BOWLER TAKING WICKET (SHATTERED STUMPS)
+      -------------------------------------------------------------------- */
+      function renderActTwo(localP, env) {
+        const s = Math.min(W, H) / 660;
+        const stumpX = env.cx;
+        const stumpY = env.creaseY + 25 * s;
+        const hitP = 0.52;
+
+        // Fast Bowler charging in from background
+        const runT = Math.min(1, localP / hitP);
+        const bowlerX = env.cx - 55 * s + runT * 28 * s;
+        const bowlerY = env.horizonY + 12 * s + runT * 48 * s;
+        const bScale = (0.48 + runT * 0.24) * s;
+
+        ctx.save();
+        ctx.translate(bowlerX, bowlerY);
+        ctx.fillStyle = '#f8fafc';
+        ctx.beginPath();
+        ctx.roundRect(-14 * bScale, -95 * bScale, 28 * bScale, 54 * bScale, 10 * bScale);
+        ctx.fill();
+        ctx.beginPath();
+        ctx.arc(0, -110 * bScale, 14 * bScale, 0, Math.PI * 2);
+        ctx.fill();
+        // Bowling arm whip
+        ctx.strokeStyle = '#facc15';
+        ctx.lineWidth = 8 * bScale;
+        ctx.lineCap = 'round';
+        ctx.beginPath();
+        ctx.moveTo(10 * bScale, -85 * bScale);
+        ctx.lineTo(24 * bScale, localP < hitP ? -135 * bScale : -45 * bScale);
+        ctx.stroke();
+        ctx.restore();
+
+        // Shatter progress after ball strikes timber
+        const shatterT = localP > hitP ? (localP - hitP) / (1 - hitP) : 0;
+        if (shatterT > 0 && !triggeredImpacts[1]) {
+          sfx.triggerAct(1);
+          triggeredImpacts[1] = true;
+        }
+
+        drawWickets(stumpX, stumpY, s * 1.15, shatterT, false);
+
+        // Late-swinging yorker path
+        let ballX, ballY, ballR;
+        if (localP < hitP) {
+          const t = localP / hitP;
+          const swingCurve = Math.sin(t * Math.PI) * 42 * s;
+          ballX = bowlerX + 20 * s + t * (stumpX + 12 * s - (bowlerX + 20 * s)) + swingCurve;
+          ballY = (bowlerY - 85 * bScale) + t * ((stumpY - 28 * s) - (bowlerY - 85 * bScale));
+          ballR = (5 + t * 5) * s;
+
+          // Red swing trail
+          ctx.strokeStyle = 'rgba(239, 68, 68, 0.55)';
+          ctx.lineWidth = 6 * s;
+          ctx.beginPath();
+          ctx.moveTo(bowlerX + 20 * s, bowlerY - 85 * bScale);
+          ctx.quadraticCurveTo(stumpX + 55 * s, (bowlerY + stumpY) * 0.5, ballX, ballY);
+          ctx.stroke();
+        } else {
+          const t = shatterT;
+          ballX = stumpX + 12 * s + t * 145 * s;
+          ballY = stumpY - 28 * s - Math.sin(t * Math.PI * 0.6) * 65 * s;
+          ballR = 9.5 * s;
+
+          // Timber impact flash
+          if (t < 0.35) {
+            const ft = t / 0.35;
+            ctx.strokeStyle = `rgba(239, 68, 68, ${1 - ft})`;
+            ctx.lineWidth = 5 * s;
+            ctx.beginPath();
+            ctx.arc(stumpX + 10 * s, stumpY - 35 * s, ft * 105 * s, 0, Math.PI * 2);
+            ctx.stroke();
+          }
+        }
+
+        drawRedCherry(ballX, ballY, ballR);
+      }
+
+      /* -------------------------------------------------------------------
+         ACT III (0.67 -> 1.00): KEEPER DOING LIGHTNING STUMPING
+      -------------------------------------------------------------------- */
+      function renderActThree(localP, env) {
+        const s = Math.min(W, H) / 660;
+        const stumpX = env.cx;
+        const stumpY = env.creaseY + 25 * s;
+        const stumpMoment = 0.52;
+
+        // Batter stranded out of crease on left
+        const batterX = stumpX - 95 * s - Math.min(1, localP * 1.4) * 20 * s;
+        ctx.save();
+        ctx.translate(batterX, stumpY + 5 * s);
+        ctx.fillStyle = 'rgba(248, 250, 252, 0.75)';
+        ctx.beginPath();
+        ctx.roundRect(-16 * s, -120 * s, 32 * s, 66 * s, 12 * s);
+        ctx.fill();
+        ctx.beginPath();
+        ctx.arc(0, -138 * s, 17 * s, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.restore();
+
+        // Bails fly off at stumpMoment!
+        const bailFly = localP > stumpMoment ? (localP - stumpMoment) / (1 - stumpMoment) : 0;
+        if (bailFly > 0 && !triggeredImpacts[2]) {
+          sfx.triggerAct(2);
+          triggeredImpacts[2] = true;
+        }
+
+        drawWickets(stumpX, stumpY, s * 1.15, bailFly, true);
+
+        // Wicketkeeper crouched behind stumps on right
+        const keeperX = stumpX + 68 * s;
+        const keeperY = stumpY + 12 * s;
+        ctx.save();
+        ctx.translate(keeperX, keeperY);
+
+        // Keeper Pads & Crouched Torso
+        ctx.fillStyle = '#059669';
+        ctx.beginPath();
+        ctx.roundRect(-22 * s, -98 * s, 44 * s, 58 * s, 16 * s);
+        ctx.fill();
+
+        // Keeper Helmet
+        ctx.fillStyle = '#022c22';
+        ctx.beginPath();
+        ctx.arc(-4 * s, -116 * s, 18 * s, 0, Math.PI * 2);
+        ctx.fill();
+
+        // Keeper Gauntlets whipping forward onto the bails
+        const whipT = localP < stumpMoment
+          ? localP / stumpMoment
+          : 1 - Math.min(0.25, (localP - stumpMoment) * 0.4);
+        const gloveX = -18 * s - whipT * 46 * s;
+        const gloveY = -66 * s - whipT * 18 * s;
+
+        ctx.fillStyle = '#facc15';
+        ctx.beginPath();
+        ctx.arc(gloveX, gloveY, 14 * s, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.strokeStyle = '#040806';
+        ctx.lineWidth = 2.5 * s;
+        ctx.stroke();
+
+        // Ball held inside keeper gloves
+        const ballStartX = env.cx - 40 * s;
+        const ballStartY = env.horizonY + 25 * s;
+        const ballX = localP < 0.35
+          ? ballStartX + (localP / 0.35) * ((keeperX + gloveX) - ballStartX)
+          : keeperX + gloveX;
+        const ballY = localP < 0.35
+          ? ballStartY + (localP / 0.35) * ((keeperY + gloveY) - ballStartY)
+          : keeperY + gloveY;
+
+        ctx.restore();
+        drawRedCherry(ballX, ballY, 9 * s);
+
+        // Stumping Flash Ring + "OUT" Broadcast Badge
+        if (bailFly > 0) {
+          if (bailFly < 0.45) {
+            const ft = bailFly / 0.45;
+            ctx.strokeStyle = `rgba(52, 211, 153, ${1 - ft})`;
+            ctx.lineWidth = 4 * s;
+            ctx.beginPath();
+            ctx.arc(stumpX, stumpY - 78 * s, ft * 85 * s, 0, Math.PI * 2);
+            ctx.stroke();
+          }
+
+          // Floating Broadcast "STUMPED!" Stamp
+          ctx.save();
+          ctx.translate(stumpX + 12 * s, stumpY - 135 * s);
+          ctx.fillStyle = '#dc2626';
+          ctx.beginPath();
+          ctx.roundRect(-58 * s, -22 * s, 116 * s, 36 * s, 8 * s);
+          ctx.fill();
+          ctx.fillStyle = '#ffffff';
+          ctx.font = `bold ${Math.round(22 * s)}px "Bebas Neue", sans-serif`;
+          ctx.textAlign = 'center';
+          ctx.textBaseline = 'middle';
+          ctx.fillText('OUT • STUMPED', 0, -3 * s);
+          ctx.restore();
+        }
+      }
+
+      // Main 60fps Animation & HUD Sync Loop
+      function animateStage() {
+        smoothP += (targetP - smoothP) * 0.12;
+        if (Math.abs(targetP - smoothP) < 0.0005) smoothP = targetP;
+
+        // Reset impact triggers when user scrolls back out of an act
+        if (smoothP < 0.08) triggeredImpacts[0] = false;
+        if (smoothP < 0.36 || smoothP > 0.68) triggeredImpacts[1] = false;
+        if (smoothP < 0.70) triggeredImpacts[2] = false;
+
+        const env = drawStadium(smoothP);
+
+        let activeAct = 0;
+        if (smoothP < 0.333) {
+          activeAct = 0;
+          renderActOne(smoothP / 0.333, env);
+        } else if (smoothP < 0.666) {
+          activeAct = 1;
+          renderActTwo((smoothP - 0.333) / 0.333, env);
+        } else {
+          activeAct = 2;
+          renderActThree((smoothP - 0.666) / 0.334, env);
+        }
+
+        // Update Top HUD Badge & Jump Buttons
+        const actConfigs = [
+          { title: 'ACT I: THE COVER DRIVE', dot: 'bg-gold-400' },
+          { title: 'ACT II: TIMBER! CLEAN BOWLED', dot: 'bg-cherry-500' },
+          { title: 'ACT III: LIGHTNING STUMPING', dot: 'bg-turf-400' }
+        ];
+        actTitle.textContent = actConfigs[activeAct].title;
+        actDot.className = `w-3 h-3 rounded-full animate-pulse ${actConfigs[activeAct].dot}`;
+
+        jumpBtns.forEach((btn, idx) => {
+          if (idx === activeAct) {
+            btn.className = 'act-jump-btn sfx-click px-3 py-1.5 rounded-xl font-mono text-xs font-bold bg-gold-400 text-pitch-950 transition-all';
+          } else {
+            btn.className = 'act-jump-btn sfx-click px-3 py-1.5 rounded-xl font-mono text-xs font-bold text-slate-300 hover:text-white transition-all';
+          }
+        });
+
+        // Update Kinetic Callout Opacities & Parallax
+        callouts.forEach((el, idx) => {
+          const start = idx * 0.333;
+          const end = start + 0.333;
+          if (smoothP >= start && smoothP <= end) {
+            const local = (smoothP - start) / 0.333;
+            const fade = Math.sin(local * Math.PI);
+            el.style.opacity = Math.min(1, fade * 1.45).toFixed(3);
+            el.style.transform = `translate3d(0, ${(0.5 - local) * 32}px, 0)`;
+          } else {
+            el.style.opacity = '0';
+          }
+        });
+
+        const pct = Math.round(smoothP * 100);
+        progressReadout.textContent = `${pct}%`;
+        scrubFillBar.style.width = `${pct}%`;
+
+        requestAnimationFrame(animateStage);
+      }
+
+      window.addEventListener('load', () => {
+        animateStage();
+      });
+    })();
+  </script>
 </body>
 </html>
